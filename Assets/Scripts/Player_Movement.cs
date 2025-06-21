@@ -126,10 +126,10 @@ public class Player_Movement : MonoBehaviour
 
     private void UpdateAnimation(float moveX)
     {
-        animator.SetBool("isMoving", Mathf.Abs(moveX) > 0.1f);
-        animator.SetBool("isJumping", isJumping);
-        animator.SetBool("isGrounded", isGrounded);
-        animator.SetBool("isFalling", isFalling);
+        animator.SetBool(AnimationStrings.isWalking, Mathf.Abs(moveX) > 0.1f);
+        animator.SetBool(AnimationStrings.isJumping, isJumping);
+        animator.SetBool(AnimationStrings.isGrounded, isGrounded);
+        animator.SetBool(AnimationStrings.isFalling, isFalling);
     }
 
 }
