@@ -5,8 +5,7 @@ public class Player_Movement : MonoBehaviour
 {
     // Các biến di chuyển
     public float moveSpeed = 5f;
-
-    // Các biến nhảy
+    public float runSpeed = 8f;
     [SerializeField] private float jumpHeight = 4f; // Chiều cao nhảy
     [SerializeField] private float jumpTimeToApex = 0.35f; // Thời gian đạt đỉnh nhảy
     [SerializeField] private LayerMask groundLayer; // Layer của mặt đất
@@ -20,6 +19,7 @@ public class Player_Movement : MonoBehaviour
     private bool isGrounded = true;
     private bool isJumping = false;
     private bool isFalling = false;
+    private bool isRunning = false;
     private float jumpVelocity; // Vận tốc nhảy
     private float gravity; // Trọng lực thủ công
 
@@ -47,6 +47,9 @@ public class Player_Movement : MonoBehaviour
         float moveX = moveInput.x;
         float moveY = rb.velocity.y;
 
+        // Áp dụng tốc độ dựa trên trạng thái chạy
+        float currentSpeed = isRunning && Mathf.Abs(moveX) > 0.1f ? runSpeed : moveSpeed;
+
         // Áp dụng trọng lực thủ công nếu không trên mặt đất
         if (!isGrounded)
         {
@@ -57,7 +60,7 @@ public class Player_Movement : MonoBehaviour
         moveY = Mathf.Max(moveY,-20f);
 
         // Đặt vận tốc
-        rb.velocity = new Vector2(moveX * moveSpeed, moveY);
+        rb.velocity = new Vector2(moveX * currentSpeed, moveY);
         // Kiểm tra đạt đỉnh nhảy để chuyển sang trạng thái rơi
         if (rb.velocity.y > 0 && isJumping)
         {
@@ -85,6 +88,10 @@ public class Player_Movement : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
         moveInput = moveInput.normalized;
+    }
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        isRunning = context.performed;
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -130,6 +137,8 @@ public class Player_Movement : MonoBehaviour
         animator.SetBool(AnimationStrings.isJumping, isJumping);
         animator.SetBool(AnimationStrings.isGrounded, isGrounded);
         animator.SetBool(AnimationStrings.isFalling, isFalling);
+        animator.SetBool(AnimationStrings.isRunning, isRunning && Mathf.Abs(moveX) > 0.1f); // Chỉ chạy khi di chuyển và nhấn Shift
     }
+
 
 }
