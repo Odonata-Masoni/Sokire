@@ -114,23 +114,7 @@ public class Player_Movement : MonoBehaviour
             groundCheckDistance,
             groundLayer
         );
-
-        if (hit.collider != null)
-        {
-            // Nếu phát hiện mặt đất, điều chỉnh vị trí Y của nhân vật để chạm đất
-            float distanceToGround = hit.distance;
-            if (distanceToGround > 0)
-            {
-                Vector3 newPosition = transform.position;
-                newPosition.y -= distanceToGround;
-                transform.position = newPosition;
-            }
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
+        isGrounded = hit.collider != null;
     }
 
     private void Flip(float moveX)
