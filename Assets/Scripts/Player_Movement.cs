@@ -41,7 +41,7 @@ public class Player_Movement : MonoBehaviour
     void FixedUpdate()
     {
         // Kiểm tra trạng thái mặt đất
-        CheckGround();
+       CheckGround();
 
         // Xử lý vận tốc
         float moveX = moveInput.x;
@@ -114,7 +114,23 @@ public class Player_Movement : MonoBehaviour
             groundCheckDistance,
             groundLayer
         );
-        isGrounded = hit.collider != null;
+
+        if (hit.collider != null)
+        {
+            // Nếu phát hiện mặt đất, điều chỉnh vị trí Y của nhân vật để chạm đất
+            float distanceToGround = hit.distance;
+            if (distanceToGround > 0)
+            {
+                Vector3 newPosition = transform.position;
+                newPosition.y -= distanceToGround;
+                transform.position = newPosition;
+            }
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
     }
 
     private void Flip(float moveX)
