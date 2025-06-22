@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6010575835130848572}
   - component: {fileID: 13667216544898208}
   - component: {fileID: 1259909577019044512}
+  - component: {fileID: 5332301004165893668}
   - component: {fileID: 686892477622378262}
   - component: {fileID: 3653174518225666353}
   - component: {fileID: 3459679351761363704}
@@ -130,13 +131,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  runSpeed: 8
-  jumpHeight: 4
+  runSpeed: 9
+  jumpHeight: 2.7
   jumpTimeToApex: 0.35
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  groundCheckDistance: 0.1
 --- !u!114 &1259909577019044512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,13 +164,13 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: ed7dc85a9c3068949b885f9210b9742e, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 13667216544898208}
+        m_TargetAssemblyTypeName: Player_Movement, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -183,7 +183,19 @@ MonoBehaviour:
     m_ActionId: 95bd4a94-6ffe-4825-b648-2bcc523c92cd
     m_ActionName: Player/Look[/Mouse/delta,/Touchscreen/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5332301004165893668}
+        m_TargetAssemblyTypeName: Attack, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2b06739f-1c2e-46cf-9298-d5a4ea2b2ae7
     m_ActionName: Player/Attack[/Mouse/leftButton,/Touchscreen/primaryTouch/tap]
   - m_PersistentCalls:
@@ -227,14 +239,55 @@ MonoBehaviour:
     m_ActionId: 54444413-ca78-4371-9c3d-d6a5cafd3053
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 13667216544898208}
+        m_TargetAssemblyTypeName: Player_Movement, Assembly-CSharp
+        m_MethodName: OnRun
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 159a90c4-c369-4a06-9008-ea6a2a4b4ccd
     m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 13667216544898208}
+        m_TargetAssemblyTypeName: Player_Movement, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a3ad8fa8-04db-4d7c-a54e-8468b1d2ebf5
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5332301004165893668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7579742121446076466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4792b950f961e4ba8fcb6081995eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCooldown: 0.5
 --- !u!70 &686892477622378262
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -267,8 +320,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.4648497, y: 1.0025944}
-  m_Size: {x: 0.69190073, y: 1.1361578}
+  m_Offset: {x: -0.057369966, y: 0.083489716}
+  m_Size: {x: 0.51636535, y: 1.0491786}
   m_Direction: 0
 --- !u!95 &3653174518225666353
 Animator:
@@ -280,7 +333,7 @@ Animator:
   m_GameObject: {fileID: 7579742121446076466}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc3af308d792fac488af0bbb2a1250ef, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -306,4 +359,11 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 64
-  checkDistance: 0.1
+  groundDistance: 0.1
+  wallDistance: 0.1
+  ceilingDistance: 0.1
+  cliffDistance: 0.1
+  _isGrounded: 0
+  _isTouchingCeiling: 0
+  _isTouchingWall: 0
+  _isNearCliff: 0

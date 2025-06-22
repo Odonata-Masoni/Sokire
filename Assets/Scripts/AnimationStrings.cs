@@ -12,4 +12,6 @@ public class AnimationStrings
     public static readonly string isTouchingCeiling = "isTouchingCeiling"; // Thêm mới
     public static readonly string isNearCliff = "isNearCliff";             // Thêm mới
     public static readonly string isTouchingWall = "isTouchingWall";       // Thêm mới
+    public static readonly string isAttacking = "isAttacking"; // Thêm dòng này
+    public static readonly string canMove = "canMove";
 }
