@@ -907,8 +907,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boolName: canMove
-  updateOnState: 1
-  updateOnStateMachine: 0
+  updateOnState: 0
+  updateOnStateMachine: 1
   valueOnEnter: 0
   valueOnExit: 1
 --- !u!1102 &7611589630324190634

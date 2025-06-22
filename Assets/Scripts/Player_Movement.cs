@@ -43,27 +43,28 @@ public class Player_Movement : MonoBehaviour
         float moveX = moveInput.x;
         float moveY = rb.velocity.y;
 
+        if (!animator.GetBool(AnimationStrings.canMove))
+        {
+            moveX = 0f;
+        }
+
         float currentSpeed = isRunning && Mathf.Abs(moveX) > 0.1f ? runSpeed : moveSpeed;
 
-        // Nếu đang chạm trần và vẫn còn vận tốc nhảy lên
         if (collisionChecker.IsTouchingCeiling && moveY > 0f)
         {
             moveY = -1f;
         }
 
-        // Nếu không chạm đất và không bị cắt nhảy bởi trần → áp dụng trọng lực
         if (!collisionChecker.IsGrounded && !collisionChecker.IsTouchingCeiling)
         {
             moveY += gravity * Time.fixedDeltaTime;
         }
 
-        // ❗ Nếu đang chạm trần + vẫn giữ nút di chuyển → tạm thời tắt moveX để tránh “dính”
         if (collisionChecker.IsTouchingCeiling && Mathf.Abs(moveX) > 0.1f)
         {
             moveX = 0f;
         }
 
-        // ❗ Nếu đang chạm tường khi nhảy lên (không dưới đất) và vẫn giữ nút → cũng tắt moveX
         if (collisionChecker.IsTouchingWall && !collisionChecker.IsGrounded && Mathf.Abs(moveX) > 0.1f)
         {
             moveX = 0f;
@@ -72,7 +73,6 @@ public class Player_Movement : MonoBehaviour
         moveY = Mathf.Max(moveY, -20f);
         rb.velocity = new Vector2(moveX * currentSpeed, moveY);
 
-        // Trạng thái nhảy/rơi
         if (collisionChecker.IsGrounded)
         {
             isFalling = false;
@@ -90,7 +90,6 @@ public class Player_Movement : MonoBehaviour
         Flip(moveX);
         UpdateAnimation(moveX);
     }
-
 
     public void OnMove(InputAction.CallbackContext context)
     {
