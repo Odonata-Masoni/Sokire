@@ -1538,11 +1538,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 13667216544898208, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: jumpHeight
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 13667216544898208, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: jumpTimeToApex
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 686892477622378262, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: m_Size.x
