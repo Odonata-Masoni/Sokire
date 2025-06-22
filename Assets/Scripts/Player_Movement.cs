@@ -9,26 +9,26 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float jumpHeight = 4f; // Chiều cao nhảy
     [SerializeField] private float jumpTimeToApex = 0.35f; // Thời gian đạt đỉnh nhảy
     [SerializeField] private LayerMask groundLayer; // Layer của mặt đất
-    [SerializeField] private float groundCheckDistance = 0.1f; // Khoảng cách kiểm tra mặt đất
 
     private Rigidbody2D rb;
     private Animator animator;
-    private CapsuleCollider2D capsulecollider2D;
+    private CapsuleCollider2D capsuleCollider2D;
     private Vector2 moveInput;
     private float facingDirection = 1f;
-    private bool isGrounded = true;
     private bool isJumping = false;
     private bool isFalling = false;
     private bool isRunning = false;
     private float jumpVelocity; // Vận tốc nhảy
     private float gravity; // Trọng lực thủ công
 
+    private CollisionChecker collisionChecker; // Tham chiếu đến CollisionChecker
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        capsulecollider2D = GetComponent<CapsuleCollider2D>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        collisionChecker = GetComponent<CollisionChecker>(); // Lấy component CollisionChecker
 
         // Tính toán vận tốc nhảy và trọng lực
         gravity = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
@@ -36,12 +36,15 @@ public class Player_Movement : MonoBehaviour
 
         // Đảm bảo Rigidbody2D không sử dụng trọng lực của Unity
         rb.gravityScale = 0f;
+
+        // Gán giá trị cho CollisionChecker
+        collisionChecker.collisionLayer = groundLayer;
     }
 
     void FixedUpdate()
     {
-        // Kiểm tra trạng thái mặt đất
-       CheckGround();
+        // Kiểm tra tất cả va chạm
+        collisionChecker.CheckCollisions();
 
         // Xử lý vận tốc
         float moveX = moveInput.x;
@@ -50,33 +53,43 @@ public class Player_Movement : MonoBehaviour
         // Áp dụng tốc độ dựa trên trạng thái chạy
         float currentSpeed = isRunning && Mathf.Abs(moveX) > 0.1f ? runSpeed : moveSpeed;
 
-        // Áp dụng trọng lực thủ công nếu không trên mặt đất
-        if (!isGrounded)
+        // Ngăn di chuyển qua tường
+        if (collisionChecker.IsTouchingWall && Mathf.Abs(moveX) > 0.1f)
+        {
+            moveX = 0; // Dừng di chuyển khi chạm tường
+        }
+
+        // Áp dụng trọng lực thủ công nếu không trên mặt đất và không chạm trần
+        if (!collisionChecker.IsGrounded && !collisionChecker.IsTouchingCeiling)
         {
             moveY += gravity * Time.fixedDeltaTime;
         }
 
         // Giới hạn vận tốc rơi
-        moveY = Mathf.Max(moveY,-20f);
+        moveY = Mathf.Max(moveY, -20f);
+
+        // Điều chỉnh di chuyển khi gần mép vực
+        if (collisionChecker.IsNearCliff && Mathf.Abs(moveX) > 0.1f)
+        {
+            currentSpeed *= 0.5f; // Giảm tốc độ khi gần mép vực
+        }
 
         // Đặt vận tốc
         rb.velocity = new Vector2(moveX * currentSpeed, moveY);
-        // Kiểm tra đạt đỉnh nhảy để chuyển sang trạng thái rơi
-        if (rb.velocity.y > 0 && isJumping)
+
+        // Kiểm tra trạng thái
+        if (collisionChecker.IsGrounded)
+        {
+            isFalling = false; // Không rơi khi chạm đất
+        }
+        else if (rb.velocity.y > 0 && isJumping)
         {
             isFalling = false; // Đang nhảy lên
         }
-        else if (rb.velocity.y <= 0 && !isGrounded)
+        else if (rb.velocity.y < 0 && !collisionChecker.IsGrounded)
         {
             isJumping = false; // Không còn nhảy
             isFalling = true;  // Đang rơi
-        }
-
-        // Đặt lại vận tốc Y khi chạm đất
-        if (isGrounded && rb.velocity.y < 0)
-        {
-            moveY = 0;
-            isJumping = false;
         }
 
         // Cập nhật lật sprite và animation
@@ -89,6 +102,7 @@ public class Player_Movement : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
         moveInput = moveInput.normalized;
     }
+
     public void OnRun(InputAction.CallbackContext context)
     {
         isRunning = context.performed;
@@ -96,25 +110,11 @@ public class Player_Movement : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded)
+        if (context.performed && collisionChecker.IsGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
             isJumping = true;
-            isGrounded = false;
         }
-    }
-
-    private void CheckGround()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(
-            capsulecollider2D.bounds.center,
-            capsulecollider2D.bounds.size,
-            0f,
-            Vector2.down,
-            groundCheckDistance,
-            groundLayer
-        );
-        isGrounded = hit.collider != null;
     }
 
     private void Flip(float moveX)
@@ -135,10 +135,7 @@ public class Player_Movement : MonoBehaviour
     {
         animator.SetBool(AnimationStrings.isMoving, Mathf.Abs(moveX) > 0.1f);
         animator.SetBool(AnimationStrings.isJumping, isJumping);
-        animator.SetBool(AnimationStrings.isGrounded, isGrounded);
         animator.SetBool(AnimationStrings.isFalling, isFalling);
-        animator.SetBool(AnimationStrings.isRunning, isRunning && Mathf.Abs(moveX) > 0.1f); // Chỉ chạy khi di chuyển và nhấn Shift
+        animator.SetBool(AnimationStrings.isRunning, isRunning && Mathf.Abs(moveX) > 0.1f);
     }
-
-
 }

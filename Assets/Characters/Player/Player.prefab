@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1259909577019044512}
   - component: {fileID: 686892477622378262}
   - component: {fileID: 3653174518225666353}
+  - component: {fileID: 3459679351761363704}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -129,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  runSpeed: 8
   jumpHeight: 4
   jumpTimeToApex: 0.35
   groundLayer:
@@ -224,6 +226,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 54444413-ca78-4371-9c3d-d6a5cafd3053
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 159a90c4-c369-4a06-9008-ea6a2a4b4ccd
+    m_ActionName: Player/Run[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -285,3 +291,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3459679351761363704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7579742121446076466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9d648db4a9f8f4cba84b37fb179c0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  checkDistance: 0.1
