@@ -12,10 +12,10 @@ TagManager:
   - Water
   - UI
   - Tilemap
-  - 
-  - 
-  - 
-  - 
+  - PLayer
+  - PLayerHitbox
+  - Enemy
+  - EnemyHitbox
   - 
   - 
   - 
