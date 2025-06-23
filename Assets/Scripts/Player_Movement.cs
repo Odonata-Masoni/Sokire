@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Player_Movement : MonoBehaviour
 {
-    [Header("Di chuyển")]
+    [Header("Movement")]
     public float moveSpeed = 5f;
     public float runSpeed = 8f;
     [SerializeField] private float jumpHeight = 4f;
