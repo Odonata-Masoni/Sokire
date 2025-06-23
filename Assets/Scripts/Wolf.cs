@@ -1,54 +1,49 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Wolf : MonoBehaviour
 {
+    [Header("Movement Settings")]
     public float walkAcceleration = 3f;
     public float maxSpeed = 3f;
     public float walkStopRate = 0.05f;
+    public float wallStuckTime = 0.3f;
 
-    Rigidbody2D rb;
-    CollisionChecker touchingDirection;
-    Animator animator;
-    Damageable damageable;
+    private Rigidbody2D rb;
+    private CollisionChecker touchingDirection;
+    private Animator animator;
+    private Damageable damageable;
 
     public enum WalkableDirection { Right, Left }
 
-    private WalkableDirection _walkDirection = WalkableDirection.Left; // Sprite mặc định nhìn trái
+    private WalkableDirection _walkDirection = WalkableDirection.Left;
     private Vector2 walkDirectionVector = Vector2.left;
+    private float wallTouchTimer = 0f;
 
     public WalkableDirection WalkDirection
     {
-        get { return _walkDirection; }
+        get => _walkDirection;
         set
         {
             _walkDirection = value;
-
-            // Cập nhật hướng di chuyển
-            walkDirectionVector = (_walkDirection == WalkableDirection.Right) ? Vector2.right : Vector2.left;
-
-            // Lật sprite bằng cách đặt đúng scale.x theo hướng
-            float scaleX = Mathf.Abs(transform.localScale.x);
-            transform.localScale = new Vector2(
-                (_walkDirection == WalkableDirection.Right) ? -scaleX : scaleX,
-                transform.localScale.y
-            );
+            walkDirectionVector = (value == WalkableDirection.Right) ? Vector2.right : Vector2.left;
+            UpdateSpriteFlip();
         }
     }
 
+    private void UpdateSpriteFlip()
+    {
+        float scaleX = Mathf.Abs(transform.localScale.x);
+        transform.localScale = new Vector3(
+            (_walkDirection == WalkableDirection.Right) ? -scaleX : scaleX,
+            transform.localScale.y,
+            transform.localScale.z
+        );
+    }
 
-
-
-    public bool _hasTarget = false;
     public bool HasTarget
     {
-        get { return _hasTarget; }
-        private set
-        {
-            _hasTarget = value;
-            animator.SetBool(AnimationStrings.hasTarget, value);
-        }
+        get => animator.GetBool(AnimationStrings.hasTarget);
+        private set => animator.SetBool(AnimationStrings.hasTarget, value);
     }
 
     public bool CanMove => animator.GetBool(AnimationStrings.canMove);
@@ -65,6 +60,10 @@ public class Wolf : MonoBehaviour
         touchingDirection = GetComponent<CollisionChecker>();
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
+
+        // Chuẩn hóa scale ngay từ đầu (quan trọng)
+        float scaleX = Mathf.Abs(transform.localScale.x);
+        transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
     }
 
     private void Start()
@@ -74,10 +73,8 @@ public class Wolf : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Cập nhật hướng để CollisionChecker raycast đúng
-        touchingDirection.WalkDirectionVector = walkDirectionVector;
-
-        touchingDirection.CheckCollisions();
+        touchingDirection.Direction = walkDirectionVector;
+        touchingDirection.Check();
 
         if (!damageable.LockVelocity)
         {
@@ -90,21 +87,26 @@ public class Wolf : MonoBehaviour
             {
                 rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, walkStopRate), rb.velocity.y);
             }
-
-            Debug.Log("CanMove: " + CanMove + " | IsGrounded: " + touchingDirection.IsGrounded +
-                      " | IsTouchingWall: " + touchingDirection.IsTouchingWall + " | Velocity: " + rb.velocity);
         }
 
-        if (touchingDirection.IsTouchingWall)
+        if (touchingDirection.IsTouchingWall && touchingDirection.IsGrounded)
         {
-            FlipDirection();
+            wallTouchTimer += Time.fixedDeltaTime;
+            if (wallTouchTimer >= wallStuckTime)
+            {
+                FlipDirection();
+                wallTouchTimer = 0f;
+            }
+        }
+        else
+        {
+            wallTouchTimer = 0f;
         }
     }
 
     private void FlipDirection()
     {
         WalkDirection = (WalkDirection == WalkableDirection.Right) ? WalkableDirection.Left : WalkableDirection.Right;
-        Debug.Log("Flipped to: " + WalkDirection);
     }
 
     public void OnHit(float damage, Vector2 knockback)

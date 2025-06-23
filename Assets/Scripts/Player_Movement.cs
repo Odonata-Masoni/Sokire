@@ -1,99 +1,126 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player_Movement : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
-    public float moveSpeed = 5f;
+    [Header("Cấu hình di chuyển")]
+    public float walkSpeed = 5f;
     public float runSpeed = 8f;
-    [SerializeField] private float jumpHeight = 4f;
-    [SerializeField] private float jumpTimeToApex = 0.35f;
+
+    [Header("Cấu hình nhảy")]
+    public float jumpHeight = 4f;
+    public float jumpApexTime = 0.35f;
+
+    [Header("Cấu hình va chạm")]
     [SerializeField] private LayerMask groundLayer;
 
     private Rigidbody2D rb;
     private Animator animator;
-    private CapsuleCollider2D capsuleCollider2D;
     private CollisionChecker collisionChecker;
 
-    private Vector2 moveInput;
-    private float facingDirection = 1f;
+    private Vector2 input;
+    private float gravity;
+    private float jumpVelocity;
+    private float facing = 1f;
+
+    private bool isRunning = false;
     private bool isJumping = false;
     private bool isFalling = false;
-    private bool isRunning = false;
-    private float jumpVelocity;
-    private float gravity;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         collisionChecker = GetComponent<CollisionChecker>();
 
-        gravity = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
-        jumpVelocity = Mathf.Abs(gravity) * jumpTimeToApex;
+        gravity = -(2 * jumpHeight) / (jumpApexTime * jumpApexTime);
+        jumpVelocity = Mathf.Abs(gravity) * jumpApexTime;
         rb.gravityScale = 0f;
-        collisionChecker.collisionLayer = groundLayer;
+
+        collisionChecker.Direction = Vector2.right;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        collisionChecker.CheckCollisions();
+        collisionChecker.Check();
 
-        float moveX = moveInput.x;
-        float moveY = rb.velocity.y;
+        float horizontal = input.x;
+        float vertical = rb.velocity.y;
 
-        if (!animator.GetBool(AnimationStrings.canMove))
+        if (collisionChecker.IsTouchingCeiling && vertical > 0)
         {
-            moveX = 0f;
+            vertical = 0f;
         }
 
-        float currentSpeed = isRunning && Mathf.Abs(moveX) > 0.1f ? runSpeed : moveSpeed;
-
-        if (collisionChecker.IsTouchingCeiling && moveY > 0f)
+        // Apply gravity if not grounded
+        if (!collisionChecker.IsGrounded)
         {
-            moveY = -1f;
+            vertical += gravity * Time.fixedDeltaTime;
         }
 
-        if (!collisionChecker.IsGrounded && !collisionChecker.IsTouchingCeiling)
+        // Nếu chạm tường trên không, dừng trượt
+        if (collisionChecker.IsTouchingWall && !collisionChecker.IsGrounded)
         {
-            moveY += gravity * Time.fixedDeltaTime;
+            horizontal = 0f;
         }
 
-        if (collisionChecker.IsTouchingCeiling && Mathf.Abs(moveX) > 0.1f)
-        {
-            moveX = 0f;
-        }
+        float speed = isRunning ? runSpeed : walkSpeed;
+        rb.velocity = new Vector2(horizontal * speed, Mathf.Clamp(vertical, -20f, 20f));
 
-        if (collisionChecker.IsTouchingWall && !collisionChecker.IsGrounded && Mathf.Abs(moveX) > 0.1f)
-        {
-            moveX = 0f;
-        }
+        UpdateJumpFallState(vertical);
+        FlipCharacter(horizontal);
+        collisionChecker.Direction = new Vector2(facing, 0);
 
-        moveY = Mathf.Max(moveY, -20f);
-        rb.velocity = new Vector2(moveX * currentSpeed, moveY);
+        UpdateAnimator(horizontal);
+    }
 
+    private void UpdateJumpFallState(float velocityY)
+    {
         if (collisionChecker.IsGrounded)
         {
+            isJumping = false;
             isFalling = false;
         }
-        else if (rb.velocity.y > 0 && isJumping)
+        else if (velocityY > 0)
         {
+            isJumping = true;
             isFalling = false;
         }
-        else if (rb.velocity.y < 0 && !collisionChecker.IsGrounded)
+        else if (velocityY < 0)
         {
             isJumping = false;
             isFalling = true;
         }
-
-        Flip(moveX);
-        UpdateAnimation(moveX);
     }
 
+    private void FlipCharacter(float horizontal)
+    {
+        if (horizontal > 0.1f && facing < 0)
+        {
+            facing = 1f;
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+        }
+        else if (horizontal < -0.1f && facing > 0)
+        {
+            facing = -1f;
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+        }
+    }
+
+    private void UpdateAnimator(float horizontal)
+    {
+        animator.SetBool(AnimationStrings.isMoving, Mathf.Abs(horizontal) > 0.1f);
+        animator.SetBool(AnimationStrings.isRunning, isRunning);
+        animator.SetBool(AnimationStrings.isJumping, isJumping);
+        animator.SetBool(AnimationStrings.isFalling, isFalling);
+        animator.SetBool(AnimationStrings.isGrounded, collisionChecker.IsGrounded);
+    }
+
+    // Input Events (có thể gọi từ Unity InputSystem)
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>().normalized;
+        input = context.ReadValue<Vector2>().normalized;
     }
 
     public void OnRun(InputAction.CallbackContext context)
@@ -108,27 +135,5 @@ public class Player_Movement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
             isJumping = true;
         }
-    }
-
-    private void Flip(float moveX)
-    {
-        if (moveX > 0.1f && facingDirection < 0)
-        {
-            facingDirection = 1f;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-        else if (moveX < -0.1f && facingDirection > 0)
-        {
-            facingDirection = -1f;
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-    }
-
-    private void UpdateAnimation(float moveX)
-    {
-        animator.SetBool(AnimationStrings.isMoving, Mathf.Abs(moveX) > 0.1f);
-        animator.SetBool(AnimationStrings.isJumping, isJumping);
-        animator.SetBool(AnimationStrings.isFalling, isFalling);
-        animator.SetBool(AnimationStrings.isRunning, isRunning && Mathf.Abs(moveX) > 0.1f);
     }
 }
