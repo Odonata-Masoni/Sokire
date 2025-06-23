@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         collisionChecker.Check();
 
-        float horizontal = input.x;
+        float horizontal = animator.GetBool(AnimationStrings.canMove) ? input.x : 0f;
         float vertical = rb.velocity.y;
 
         if (collisionChecker.IsTouchingCeiling && vertical > 0)
