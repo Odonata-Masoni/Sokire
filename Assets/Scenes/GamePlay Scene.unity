@@ -1665,9 +1665,29 @@ PrefabInstance:
       propertyPath: m_GravityScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4636460689520107158, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: maxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636460689520107158, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: wallStuckTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636460689520107158, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: walkAcceleration
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5425784986481657403, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: wallCheckDistance
       value: 0.101
+      objectReference: {fileID: 0}
+    - target: {fileID: 5775166239130812739, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: maxSpeed
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5775166239130812739, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: walkAcceleration
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Name
@@ -1721,7 +1741,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5775166239130812739, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
