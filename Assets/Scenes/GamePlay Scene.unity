@@ -157,46 +157,6 @@ MonoBehaviour:
   _health: 100
   _isAlive: 1
   isInvincibilityTime: 0.25
---- !u!114 &198396863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 198396857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd9d648db4a9f8f4cba84b37fb179c0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  groundDistance: 0.2
-  wallDistance: 0.3
-  ceilingDistance: 0.05
-  cliffDistance: 0.5
-  _isGrounded: 0
-  _isTouchingCeiling: 0
-  _isTouchingWall: 0
-  _isNearCliff: 0
-  WalkDirectionVector: {x: -1, y: 0}
---- !u!114 &198396864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 198396857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d3ff3519f760e44293660343f58aa60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkAcceleration: 3
-  maxSpeed: 3
-  walkStopRate: 0.05
-  _hasTarget: 0
 --- !u!95 &198396865
 Animator:
   serializedVersion: 5
@@ -1690,12 +1650,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 198396864}
-    - targetCorrespondingSourceObject: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 198396863}
     - targetCorrespondingSourceObject: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 198396862}
