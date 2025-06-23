@@ -5,7 +5,7 @@ public class CollisionChecker : MonoBehaviour
     [Header("Cấu hình kiểm tra va chạm")]
     [SerializeField] public LayerMask collisionLayer;
     [SerializeField] public float groundDistance = 0.2f;
-    [SerializeField] public float wallDistance = 0.4f; // Tăng lên 0.4 để phát hiện sớm hơn
+    [SerializeField] public float wallDistance = 0.4f;
     [SerializeField] public float ceilingDistance = 0.05f;
     [SerializeField] public float cliffDistance = 0.5f;
 
@@ -42,7 +42,8 @@ public class CollisionChecker : MonoBehaviour
         private set { _isNearCliff = value; animator?.SetBool(AnimationStrings.isNearCliff, value); }
     }
 
-    private Vector2 wallCheckDirection => transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+    // Hướng di chuyển được cập nhật từ Wolf.cs
+    [HideInInspector] public Vector2 WalkDirectionVector = Vector2.left;
 
     void Awake()
     {
@@ -57,10 +58,11 @@ public class CollisionChecker : MonoBehaviour
     {
         IsGrounded = touchingCol.Cast(Vector2.down, castFilter, hits, groundDistance) > 0;
         IsTouchingCeiling = touchingCol.Cast(Vector2.up, castFilter, hits, ceilingDistance) > 0;
-        IsTouchingWall = touchingCol.Cast(wallCheckDirection, castFilter, hits, wallDistance) > 0;
+        IsTouchingWall = touchingCol.Cast(WalkDirectionVector, castFilter, hits, wallDistance) > 0;
 
-        Vector2 checkCliffPos = (Vector2)touchingCol.bounds.center + wallCheckDirection * (touchingCol.bounds.size.x / 2 + cliffDistance);
+        Vector2 checkCliffPos = (Vector2)touchingCol.bounds.center + WalkDirectionVector * (touchingCol.bounds.size.x / 2 + cliffDistance);
         IsNearCliff = !Physics2D.Raycast(checkCliffPos, Vector2.down, 2f, collisionLayer) && !IsGrounded;
-        Debug.Log("IsGrounded: " + IsGrounded + " | IsTouchingWall: " + IsTouchingWall + " | WallDirection: " + wallCheckDirection);
+
+        Debug.Log("IsGrounded: " + IsGrounded + " | IsTouchingWall: " + IsTouchingWall + " | WalkDirection: " + WalkDirectionVector);
     }
 }

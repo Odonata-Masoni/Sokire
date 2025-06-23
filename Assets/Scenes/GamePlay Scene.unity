@@ -180,6 +180,7 @@ MonoBehaviour:
   _isTouchingCeiling: 0
   _isTouchingWall: 0
   _isNearCliff: 0
+  WalkDirectionVector: {x: -1, y: 0}
 --- !u!114 &198396864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,11 +602,11 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 7, y: -3, z: 0}
+  - first: {x: 8, y: -3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -623,14 +624,14 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 29
+  - m_RefCount: 30
     m_Data: {fileID: 11400000, guid: c45a85f99dc45b74fb0c2c0851fb9d1a, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 01f7a7f8f0aea0b4682235ddcc633f57, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 29
+  - m_RefCount: 30
     m_Data: {fileID: -411012803, guid: 99672f6f11e127c44ae10f2aa8c9e0f4, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: -340314749, guid: 99672f6f11e127c44ae10f2aa8c9e0f4, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 31
@@ -727,13 +728,13 @@ CompositeCollider2D:
         Y: -20000000
       - X: 170000000
         Y: -30000000
-      - X: 80000000
+      - X: 90000000
         Y: -30000000
+      - X: 90000000
+        Y: -20000000
       - X: 80000000
         Y: -20000000
-      - X: 70000000
-        Y: -20000000
-      - X: 70000000
+      - X: 80000000
         Y: -30000000
       - X: -70000000
         Y: -30000000
@@ -749,10 +750,10 @@ CompositeCollider2D:
       - {x: 17.999971, y: -2}
       - {x: 17, y: -2.0000293}
       - {x: 16.999971, y: -3}
-      - {x: 8, y: -2.9999707}
-      - {x: 7.9999704, y: -2}
-      - {x: 7, y: -2.0000293}
-      - {x: 6.9999704, y: -3}
+      - {x: 9, y: -2.9999707}
+      - {x: 8.99997, y: -2}
+      - {x: 8, y: -2.0000293}
+      - {x: 7.9999704, y: -3}
       - {x: -7, y: -3.0000293}
       - {x: -6.9999704, y: -4}
   m_VertexDistance: 0.0005
@@ -954,7 +955,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.192603, y: -2.1904461, z: -10.006147}
+  m_LocalPosition: {x: 6.69, y: -2.39, z: -10.006147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1341,7 +1342,7 @@ Transform:
   m_GameObject: {fileID: 1147689675}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.192603, y: -2.1904461, z: -10.006147}
+  m_LocalPosition: {x: 6.69, y: -2.39, z: -10.006147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1633,9 +1634,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 338609308488484818, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Name
       value: Wolf
+      objectReference: {fileID: 0}
+    - target: {fileID: 8123286831390162720, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8123286831390162720, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1716,11 +1725,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4577486390822030919, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.192603
+      value: 6.69
       objectReference: {fileID: 0}
     - target: {fileID: 4577486390822030919, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.1904461
+      value: -2.39
       objectReference: {fileID: 0}
     - target: {fileID: 4577486390822030919, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: m_LocalPosition.z
