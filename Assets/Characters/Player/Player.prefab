@@ -359,11 +359,12 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 64
-  groundDistance: 0.1
-  wallDistance: 0.1
-  ceilingDistance: 0.1
+  groundDistance: 0.2
+  wallDistance: 0.2
+  ceilingDistance: 0.2
   cliffDistance: 0.1
   _isGrounded: 0
   _isTouchingCeiling: 0
   _isTouchingWall: 0
   _isNearCliff: 0
+  WalkDirectionVector: {x: -1, y: 0}
