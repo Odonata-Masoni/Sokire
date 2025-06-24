@@ -12,8 +12,8 @@ TagManager:
   - Water
   - UI
   - Tilemap
-  - PLayer
-  - PLayerHitbox
+  - Player
+  - PlayerHitbox
   - Enemy
   - EnemyHitbox
   - 
