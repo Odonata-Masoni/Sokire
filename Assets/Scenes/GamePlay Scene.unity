@@ -1661,9 +1661,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 97750560884979241, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 97750560884979241, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 338609308488484818, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_GravityScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791787456059892122, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215099868617527396, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215099868617527396, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3244865049832066908, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4636460689520107158, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: maxSpeed
@@ -1831,6 +1855,10 @@ PrefabInstance:
     - target: {fileID: 7579742121446076466, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579742121446076466, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
