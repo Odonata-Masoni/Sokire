@@ -1,5 +1,4 @@
-﻿// WolfAI.cs - Main AI Controller using FSM
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CollisionChecker))]
@@ -12,13 +11,16 @@ public class WolfAI : MonoBehaviour
     private Animator animator;
     private Damageable damageable;
 
-    private EnemyState currentState;
+    private EnemyBaseState currentState;
 
     [Header("Movement Settings")]
     public float walkAcceleration = 3f;
     public float maxSpeed = 3f;
     public float walkStopRate = 0.05f;
     public float wallStuckTime = 0.3f;
+
+    [Header("Detection")]
+    public WolfDetector Detector; // Kéo vào Inspector
 
     public Vector2 WalkDirectionVector { get; private set; } = Vector2.left;
     public float WallTouchTimer { get; set; } = 0f;
@@ -35,7 +37,7 @@ public class WolfAI : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(new PatrolState(this));
+        ChangeState(new PatrolState1(this));
     }
 
     private void FixedUpdate()
@@ -46,7 +48,7 @@ public class WolfAI : MonoBehaviour
         currentState?.FixedUpdate();
     }
 
-    public void ChangeState(EnemyState newState)
+    public void ChangeState(EnemyBaseState newState)
     {
         currentState?.Exit();
         currentState = newState;
@@ -75,67 +77,12 @@ public class WolfAI : MonoBehaviour
         rb.velocity = new Vector2(Mathf.Clamp(targetVelocityX, -maxSpeed, maxSpeed), rb.velocity.y);
     }
 
+    public void TriggerAttack()
+    {
+        animator.SetTrigger("attack");
+    }
+
     public bool CanMove => animator.GetBool(AnimationStrings.canMove);
     public bool LockVelocity => damageable.LockVelocity;
     public CollisionChecker Touching => touchingDirection;
-}
-
-// EnemyState.cs - Abstract base class
-public abstract class EnemyState
-{
-    protected WolfAI wolf;
-
-    public EnemyState(WolfAI wolf) => this.wolf = wolf;
-
-    public virtual void Enter() { }
-    public virtual void FixedUpdate() { }
-    public virtual void Exit() { }
-}
-
-// PatrolState.cs
-public class PatrolState : EnemyState
-{
-    public PatrolState(WolfAI wolf) : base(wolf) { }
-
-    public override void Enter()
-    {
-        wolf.SetWalkDirection(Vector2.left);
-    }
-
-    public override void FixedUpdate()
-    {
-        if (wolf.LockVelocity)
-            return;
-
-        if (wolf.CanMove)
-        {
-            wolf.MoveForward();
-        }
-        else
-        {
-            wolf.StopMovement();
-        }
-
-        if (wolf.Touching.IsTouchingWall && wolf.Touching.IsGrounded)
-        {
-            wolf.WallTouchTimer += Time.fixedDeltaTime;
-            if (wolf.WallTouchTimer >= wolf.wallStuckTime)
-            {
-                FlipDirection();
-                wolf.WallTouchTimer = 0f;
-            }
-        }
-        else
-        {
-            wolf.WallTouchTimer = 0f;
-        }
-    }
-
-    private void FlipDirection()
-    {
-        Vector2 currentDir = wolf.WalkDirectionVector;
-        wolf.SetWalkDirection(currentDir == Vector2.right ? Vector2.left : Vector2.right);
-    }
-
-    public override void Exit() { }
 }
