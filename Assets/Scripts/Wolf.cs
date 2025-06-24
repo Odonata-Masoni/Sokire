@@ -1,58 +1,27 @@
-﻿using UnityEngine;
+﻿// WolfAI.cs - Main AI Controller using FSM
+using UnityEngine;
 
-public class Wolf : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CollisionChecker))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Damageable))]
+public class WolfAI : MonoBehaviour
 {
+    private Rigidbody2D rb;
+    private CollisionChecker touchingDirection;
+    private Animator animator;
+    private Damageable damageable;
+
+    private EnemyState currentState;
+
     [Header("Movement Settings")]
     public float walkAcceleration = 3f;
     public float maxSpeed = 3f;
     public float walkStopRate = 0.05f;
     public float wallStuckTime = 0.3f;
 
-    private Rigidbody2D rb;
-    private CollisionChecker touchingDirection;
-    private Animator animator;
-    private Damageable damageable;
-
-    public enum WalkableDirection { Right, Left }
-
-    private WalkableDirection _walkDirection = WalkableDirection.Left;
-    private Vector2 walkDirectionVector = Vector2.left;
-    private float wallTouchTimer = 0f;
-
-    public WalkableDirection WalkDirection
-    {
-        get => _walkDirection;
-        set
-        {
-            _walkDirection = value;
-            walkDirectionVector = (value == WalkableDirection.Right) ? Vector2.right : Vector2.left;
-            UpdateSpriteFlip();
-        }
-    }
-
-    private void UpdateSpriteFlip()
-    {
-        float scaleX = Mathf.Abs(transform.localScale.x);
-        transform.localScale = new Vector3(
-            (_walkDirection == WalkableDirection.Right) ? -scaleX : scaleX,
-            transform.localScale.y,
-            transform.localScale.z
-        );
-    }
-
-    public bool HasTarget
-    {
-        get => animator.GetBool(AnimationStrings.hasTarget);
-        private set => animator.SetBool(AnimationStrings.hasTarget, value);
-    }
-
-    public bool CanMove => animator.GetBool(AnimationStrings.canMove);
-
-    public float AttackCooldown
-    {
-        get => animator.GetFloat(AnimationStrings.attackCD);
-        private set => animator.SetFloat(AnimationStrings.attackCD, Mathf.Max(value, 0));
-    }
+    public Vector2 WalkDirectionVector { get; private set; } = Vector2.left;
+    public float WallTouchTimer { get; set; } = 0f;
 
     private void Awake()
     {
@@ -61,64 +30,112 @@ public class Wolf : MonoBehaviour
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
 
-        // Chuẩn hóa scale ngay từ đầu (quan trọng)
-        float scaleX = Mathf.Abs(transform.localScale.x);
-        transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 
     private void Start()
     {
-        WalkDirection = WalkableDirection.Left;
+        ChangeState(new PatrolState(this));
     }
 
     private void FixedUpdate()
     {
-        touchingDirection.Direction = walkDirectionVector;
+        touchingDirection.Direction = WalkDirectionVector;
         touchingDirection.Check();
 
-        if (!damageable.LockVelocity)
+        currentState?.FixedUpdate();
+    }
+
+    public void ChangeState(EnemyState newState)
+    {
+        currentState?.Exit();
+        currentState = newState;
+        currentState?.Enter();
+    }
+
+    public void SetWalkDirection(Vector2 direction)
+    {
+        WalkDirectionVector = direction;
+        float scaleX = Mathf.Abs(transform.localScale.x);
+        transform.localScale = new Vector3(
+            direction == Vector2.right ? -scaleX : scaleX,
+            transform.localScale.y,
+            transform.localScale.z
+        );
+    }
+
+    public void StopMovement()
+    {
+        rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, walkStopRate), rb.velocity.y);
+    }
+
+    public void MoveForward()
+    {
+        float targetVelocityX = rb.velocity.x + (walkAcceleration * WalkDirectionVector.x * Time.fixedDeltaTime);
+        rb.velocity = new Vector2(Mathf.Clamp(targetVelocityX, -maxSpeed, maxSpeed), rb.velocity.y);
+    }
+
+    public bool CanMove => animator.GetBool(AnimationStrings.canMove);
+    public bool LockVelocity => damageable.LockVelocity;
+    public CollisionChecker Touching => touchingDirection;
+}
+
+// EnemyState.cs - Abstract base class
+public abstract class EnemyState
+{
+    protected WolfAI wolf;
+
+    public EnemyState(WolfAI wolf) => this.wolf = wolf;
+
+    public virtual void Enter() { }
+    public virtual void FixedUpdate() { }
+    public virtual void Exit() { }
+}
+
+// PatrolState.cs
+public class PatrolState : EnemyState
+{
+    public PatrolState(WolfAI wolf) : base(wolf) { }
+
+    public override void Enter()
+    {
+        wolf.SetWalkDirection(Vector2.left);
+    }
+
+    public override void FixedUpdate()
+    {
+        if (wolf.LockVelocity)
+            return;
+
+        if (wolf.CanMove)
         {
-            if (CanMove)
-            {
-                float targetVelocityX = rb.velocity.x + (walkAcceleration * walkDirectionVector.x * Time.fixedDeltaTime);
-                rb.velocity = new Vector2(Mathf.Clamp(targetVelocityX, -maxSpeed, maxSpeed), rb.velocity.y);
-            }
-            else
-            {
-                rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, walkStopRate), rb.velocity.y);
-            }
+            wolf.MoveForward();
+        }
+        else
+        {
+            wolf.StopMovement();
         }
 
-        if (touchingDirection.IsTouchingWall && touchingDirection.IsGrounded)
+        if (wolf.Touching.IsTouchingWall && wolf.Touching.IsGrounded)
         {
-            wallTouchTimer += Time.fixedDeltaTime;
-            if (wallTouchTimer >= wallStuckTime)
+            wolf.WallTouchTimer += Time.fixedDeltaTime;
+            if (wolf.WallTouchTimer >= wolf.wallStuckTime)
             {
                 FlipDirection();
-                wallTouchTimer = 0f;
+                wolf.WallTouchTimer = 0f;
             }
         }
         else
         {
-            wallTouchTimer = 0f;
+            wolf.WallTouchTimer = 0f;
         }
     }
 
     private void FlipDirection()
     {
-        WalkDirection = (WalkDirection == WalkableDirection.Right) ? WalkableDirection.Left : WalkableDirection.Right;
+        Vector2 currentDir = wolf.WalkDirectionVector;
+        wolf.SetWalkDirection(currentDir == Vector2.right ? Vector2.left : Vector2.right);
     }
 
-    public void OnHit(float damage, Vector2 knockback)
-    {
-        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
-    }
-
-    public void OnCliffDetected()
-    {
-        if (touchingDirection.IsGrounded)
-        {
-            FlipDirection();
-        }
-    }
+    public override void Exit() { }
 }
