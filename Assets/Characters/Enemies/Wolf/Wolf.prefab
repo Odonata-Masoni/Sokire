@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3948227465087912947}
   - component: {fileID: 338609308488484818}
   - component: {fileID: 1366921825017737304}
-  - component: {fileID: 5775166239130812739}
   - component: {fileID: 5425784986481657403}
   - component: {fileID: 4636460689520107158}
+  - component: {fileID: 791817713732462061}
+  - component: {fileID: 4091055165738585772}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
@@ -151,22 +152,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.13498068, y: 0.13250631}
   m_Size: {x: 1.201148, y: 1.2011489}
   m_Direction: 0
---- !u!114 &5775166239130812739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7069435392800439849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d3ff3519f760e44293660343f58aa60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkAcceleration: 3
-  maxSpeed: 3
-  walkStopRate: 0.05
-  _hasTarget: 0
 --- !u!114 &5425784986481657403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,15 +167,10 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 64
-  groundDistance: 0.2
-  wallDistance: 0.3
-  ceilingDistance: 0.05
-  cliffDistance: 0.5
-  _isGrounded: 0
-  _isTouchingCeiling: 0
-  _isTouchingWall: 0
-  _isNearCliff: 0
-  WalkDirectionVector: {x: -1, y: 0}
+  groundCheckDistance: 0.1
+  ceilingCheckDistance: 0.05
+  wallCheckDistance: 0.2
+  cliffCheckDistance: 0.5
 --- !u!114 &4636460689520107158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,4 +186,50 @@ MonoBehaviour:
   walkAcceleration: 3
   maxSpeed: 3
   walkStopRate: 0.05
-  _hasTarget: 0
+  wallStuckTime: 0.3
+--- !u!95 &791817713732462061
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069435392800439849}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4091055165738585772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069435392800439849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029716407c2735c469763d49ebec47fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageableHit:
+    m_PersistentCalls:
+      m_Calls: []
+  damageableHitP:
+    m_PersistentCalls:
+      m_Calls: []
+  damageableDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _maxHealth: 100
+  _health: 100
+  _isAlive: 1
+  isInvincibilityTime: 0.25
