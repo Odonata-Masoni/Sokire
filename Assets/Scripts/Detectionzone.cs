@@ -9,7 +9,12 @@ public class DetectionZone : MonoBehaviour
 
     private void Start()
     {
+        // Lấy đúng WolfDetector từ object cha
         detector = GetComponentInParent<WolfDetector>();
+        if (detector == null)
+        {
+            Debug.LogError($"[DetectionZone {name}] ❌ Không tìm thấy WolfDetector ở cha!");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -26,10 +31,14 @@ public class DetectionZone : MonoBehaviour
 
         if (zoneType == ZoneType.Attack)
         {
-            detector.SetAttackRangeDetected(); // ✅ sử dụng grace time
+            detector.SetAttackRangeDetected();
         }
 
-        Debug.Log($"🧪 AttackZone Size: {GetComponent<BoxCollider2D>().size}, Center: {GetComponent<BoxCollider2D>().offset}");
+        BoxCollider2D box = GetComponent<BoxCollider2D>();
+        if (box != null)
+        {
+            Debug.Log($"🧪 {name} Size: {box.size}, Center: {box.offset}");
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -41,8 +50,5 @@ public class DetectionZone : MonoBehaviour
             detector.PlayerInSight = false;
             Debug.Log("⚪ Player lost");
         }
-
-        // ❌ KHÔNG được đụng tới PlayerInAttackRange nữa
-        // vì nó được tính bằng grace time trong WolfDetector
     }
 }

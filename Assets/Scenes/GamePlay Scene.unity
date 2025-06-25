@@ -191,6 +191,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graceDuration: 0.5
+--- !u!114 &198396874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198396857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38098efbfa5dcf43a22a8d93d893cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &425769523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,7 +1135,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3244865049832066908, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
   m_PrefabInstance: {fileID: 5052507023741273065}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &680962699
+--- !u!114 &680962704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1135,19 +1148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoneType: 0
---- !u!114 &680962700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680962695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a8e7d1484564547a9a739b3d8d6a82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graceDuration: 0.2
 --- !u!1 &754712959
 GameObject:
   m_ObjectHideFlags: 3
@@ -1623,7 +1623,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1791787456059892122, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
   m_PrefabInstance: {fileID: 5052507023741273065}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1846017749
+--- !u!114 &1846017753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1636,19 +1636,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoneType: 1
---- !u!114 &1846017750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846017745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a8e7d1484564547a9a739b3d8d6a82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graceDuration: 0.2
 --- !u!1 &1985347852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,7 +1754,7 @@ PrefabInstance:
     - target: {fileID: 4636460689520107158, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: Detector
       value: 
-      objectReference: {fileID: 680962700}
+      objectReference: {fileID: 198396873}
     - target: {fileID: 4636460689520107158, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: maxSpeed
       value: 5
@@ -1872,18 +1859,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 198396873}
+    - targetCorrespondingSourceObject: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 198396874}
     - targetCorrespondingSourceObject: {fileID: 3244865049832066908, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 680962699}
-    - targetCorrespondingSourceObject: {fileID: 3244865049832066908, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 680962700}
+      addedObject: {fileID: 680962704}
     - targetCorrespondingSourceObject: {fileID: 1791787456059892122, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1846017749}
-    - targetCorrespondingSourceObject: {fileID: 1791787456059892122, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1846017750}
+      addedObject: {fileID: 1846017753}
   m_SourcePrefab: {fileID: 100100000, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
 --- !u!1001 &8098118353195908902
 PrefabInstance:

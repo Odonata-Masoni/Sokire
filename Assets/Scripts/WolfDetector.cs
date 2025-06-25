@@ -6,7 +6,12 @@ public class WolfDetector : MonoBehaviour
 
     public bool PlayerInAttackRange
     {
-        get { return Time.time < lastDetectedTime + graceDuration; }
+        get
+        {
+            bool inRange = Time.time < lastDetectedTime + graceDuration;
+            Debug.Log($"[WolfDetector] Attack check: {inRange} (now: {Time.time:F2}, until: {lastDetectedTime + graceDuration:F2})");
+            return inRange;
+        }
     }
 
     [SerializeField] private float graceDuration = 0.5f;
@@ -15,6 +20,6 @@ public class WolfDetector : MonoBehaviour
     public void SetAttackRangeDetected()
     {
         lastDetectedTime = Time.time;
-        Debug.Log("🔴 Player in attack range (with grace)");
+        Debug.Log("🔴 Player in attack range (timestamp set)");
     }
 }

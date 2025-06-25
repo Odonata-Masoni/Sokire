@@ -18,10 +18,8 @@ public class ChaseState1 : EnemyBaseState
 
     public override void FixedUpdate()
     {
-        // Log chi tiết
         Debug.Log($"[ChaseState1] FixedUpdate - Sight: {wolf.Detector.PlayerInSight}, Attack: {wolf.Detector.PlayerInAttackRange}");
 
-        // Nếu mất cả Sight và Attack range
         if (!wolf.Detector.PlayerInSight && !wolf.Detector.PlayerInAttackRange)
         {
             Debug.Log("[ChaseState1] ❌ Lost sight of player, switching to Patrol");
@@ -29,8 +27,7 @@ public class ChaseState1 : EnemyBaseState
             return;
         }
 
-        // Delay 1 tí cho chắc (nếu muốn bỏ cũng được)
-        if ((Time.time - entryTime) > 0.05f && wolf.Detector.PlayerInAttackRange)
+        if (wolf.Detector.PlayerInAttackRange)
         {
             Debug.Log("[ChaseState1] ✅ Player in attack range, switching to Attack");
             wolf.ChangeState(new AttackState1(wolf));
@@ -39,12 +36,12 @@ public class ChaseState1 : EnemyBaseState
 
         if (wolf.LockVelocity)
         {
-            Debug.Log("[ChaseState1] ⛔ LockVelocity == true, skipping movement logic");
+            Debug.Log("[ChaseState1] ⛔ LockVelocity == true, skipping movement");
             return;
         }
 
-        Vector2 direction = player.position.x > wolf.transform.position.x ? Vector2.right : Vector2.left;
-        wolf.SetWalkDirection(direction);
+        Vector2 dir = player.position.x > wolf.transform.position.x ? Vector2.right : Vector2.left;
+        wolf.SetWalkDirection(dir);
 
         if (wolf.CanMove)
         {
@@ -53,7 +50,7 @@ public class ChaseState1 : EnemyBaseState
         }
         else
         {
-            Debug.Log("[ChaseState1] ⛔ Can't move, stopping");
+            Debug.Log("[ChaseState1] ⛔ Can't move");
             wolf.StopMovement();
         }
     }
