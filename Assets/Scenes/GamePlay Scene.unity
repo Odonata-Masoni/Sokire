@@ -1198,14 +1198,14 @@ MonoBehaviour:
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
   m_XDamping: 1
-  m_YDamping: 1
+  m_YDamping: 4.2
   m_ZDamping: 1
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
+  m_DeadZoneWidth: 0.11
+  m_DeadZoneHeight: 0.32
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.8
@@ -1769,11 +1769,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699086909835716579, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Size.x
-      value: 5.01394
+      value: 6.4519424
       objectReference: {fileID: 0}
     - target: {fileID: 4699086909835716579, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Offset.x
-      value: -3.0235887
+      value: -2.3045874
       objectReference: {fileID: 0}
     - target: {fileID: 5425784986481657403, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: wallCheckDistance
