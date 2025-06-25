@@ -2,42 +2,19 @@
 
 public class WolfDetector : MonoBehaviour
 {
-    public bool PlayerInSight { get;  set; }
-    public bool PlayerInAttackRange { get;  set; }
+    public bool PlayerInSight { get; set; }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public bool PlayerInAttackRange
     {
-        if (other.CompareTag("Player"))
-        {
-            if (name.Contains("PlayerDetection"))
-            {
-                PlayerInSight = true;
-                Debug.Log("🟢 Player detected");
-            }
-
-            if (name.Contains("AttackZone"))
-            {
-                PlayerInAttackRange = true;
-                Debug.Log("🔴 Player in attack range");
-            }
-        }
+        get { return Time.time < lastDetectedTime + graceDuration; }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            if (name.Contains("PlayerDetection"))
-            {
-                PlayerInSight = false;
-                Debug.Log("⚪ Player lost");
-            }
+    [SerializeField] private float graceDuration = 0.5f;
+    private float lastDetectedTime = Mathf.NegativeInfinity;
 
-            if (name.Contains("AttackZone"))
-            {
-                PlayerInAttackRange = false;
-                Debug.Log("⚫ Player left attack range");
-            }
-        }
+    public void SetAttackRangeDetected()
+    {
+        lastDetectedTime = Time.time;
+        Debug.Log("🔴 Player in attack range (with grace)");
     }
 }

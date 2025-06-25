@@ -178,6 +178,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &198396873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198396857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a8e7d1484564547a9a739b3d8d6a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graceDuration: 0.5
 --- !u!1 &425769523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,6 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a8e7d1484564547a9a739b3d8d6a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  graceDuration: 0.2
 --- !u!1 &754712959
 GameObject:
   m_ObjectHideFlags: 3
@@ -1634,6 +1648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a8e7d1484564547a9a739b3d8d6a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  graceDuration: 0.2
 --- !u!1 &1985347852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1777,6 +1792,18 @@ PrefabInstance:
       propertyPath: walkAcceleration
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6649412564532419726, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_Size.x
+      value: 2.9583478
+      objectReference: {fileID: 0}
+    - target: {fileID: 6649412564532419726, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_Offset.x
+      value: -1.3369334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6649412564532419726, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Name
       value: Wolf
@@ -1829,7 +1856,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2215099868617527396, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+    - {fileID: 97750560884979241, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+    - {fileID: 4091055165738585772, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1839,6 +1869,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 198396865}
+    - targetCorrespondingSourceObject: {fileID: 7069435392800439849, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 198396873}
     - targetCorrespondingSourceObject: {fileID: 3244865049832066908, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 680962699}

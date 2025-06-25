@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AttackState1 : EnemyBaseState
 {
@@ -9,23 +9,43 @@ public class AttackState1 : EnemyBaseState
 
     public override void Enter()
     {
+        Debug.Log("[AttackState1] Entered Attack");
+
         wolf.StopMovement();
+        wolf.SetCanMove(false);
         wolf.TriggerAttack();
         lastAttackTime = Time.time;
+
     }
 
-    public override void FixedUpdate()
+
+    public override void Update()
     {
-        if (!wolf.Detector.PlayerInAttackRange)
+        if (!wolf.Detector.PlayerInAttackRange && !wolf.Detector.PlayerInSight)
         {
+            Debug.Log("[AttackState1] Player gone, switching to Patrol");
+            wolf.ChangeState(new PatrolState1(wolf));
+            return;
+        }
+
+        if (!wolf.Detector.PlayerInAttackRange && wolf.Detector.PlayerInSight)
+        {
+            Debug.Log("[AttackState1] Player not in attack range, chasing again");
             wolf.ChangeState(new ChaseState1(wolf));
             return;
         }
 
         if (Time.time - lastAttackTime >= attackCooldown)
         {
+            Debug.Log("[AttackState1] Triggering attack");
             wolf.TriggerAttack();
             lastAttackTime = Time.time;
         }
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("[AttackState1] Exit Attack");
+        wolf.SetCanMove(true);
     }
 }

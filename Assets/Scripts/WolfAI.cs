@@ -20,7 +20,7 @@ public class WolfAI : MonoBehaviour
     public float wallStuckTime = 0.3f;
 
     [Header("Detection")]
-    public WolfDetector Detector; // Kéo vào Inspector
+    public WolfDetector Detector; // Kéo vào trong Inspector từ PlayerDetection
 
     public Vector2 WalkDirectionVector { get; private set; } = Vector2.left;
     public float WallTouchTimer { get; set; } = 0f;
@@ -32,6 +32,7 @@ public class WolfAI : MonoBehaviour
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
 
+        // Reset scale theo chiều nhìn ban đầu
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 
@@ -42,22 +43,33 @@ public class WolfAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Luôn kiểm tra hướng tiếp xúc để biết có chạm tường, rìa hay không
         touchingDirection.Direction = WalkDirectionVector;
         touchingDirection.Check();
 
         currentState?.FixedUpdate();
     }
+    private void Update()
+    {
+        currentState?.Update();
+    }
+
 
     public void ChangeState(EnemyBaseState newState)
     {
+        Debug.Log($"[WolfAI] Changing state from {currentState?.GetType().Name} to {newState.GetType().Name}");
         currentState?.Exit();
         currentState = newState;
         currentState?.Enter();
+        Debug.Log($"[WolfAI] New currentState: {currentState?.GetType().Name}");
     }
+
+
 
     public void SetWalkDirection(Vector2 direction)
     {
         WalkDirectionVector = direction;
+
         float scaleX = Mathf.Abs(transform.localScale.x);
         transform.localScale = new Vector3(
             direction == Vector2.right ? -scaleX : scaleX,
@@ -79,10 +91,21 @@ public class WolfAI : MonoBehaviour
 
     public void TriggerAttack()
     {
+        Debug.Log("TriggerAttack called!");
+        animator.ResetTrigger("attack"); // Đảm bảo không bị trigger cũ treo
         animator.SetTrigger("attack");
+    }
+
+
+
+
+    public void SetCanMove(bool value)
+    {
+        animator.SetBool(AnimationStrings.canMove, value);
     }
 
     public bool CanMove => animator.GetBool(AnimationStrings.canMove);
     public bool LockVelocity => damageable.LockVelocity;
     public CollisionChecker Touching => touchingDirection;
+
 }

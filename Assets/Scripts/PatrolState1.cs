@@ -7,6 +7,7 @@ public class PatrolState1 : EnemyBaseState
     public override void Enter()
     {
         wolf.SetWalkDirection(Vector2.left);
+        Debug.Log("Entered [Patrol]"); // đặt theo từng state cụ thể
     }
 
     public override void FixedUpdate()
@@ -45,4 +46,5 @@ public class PatrolState1 : EnemyBaseState
         Vector2 dir = wolf.WalkDirectionVector;
         wolf.SetWalkDirection(dir == Vector2.right ? Vector2.left : Vector2.right);
     }
+  
 }
