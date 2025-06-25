@@ -108,4 +108,26 @@ public class WolfAI : MonoBehaviour
     public bool LockVelocity => damageable.LockVelocity;
     public CollisionChecker Touching => touchingDirection;
 
+    public void OnAttackAnimationComplete()
+    {
+        if (currentState is AttackState1 attackState)
+        {
+            attackState.OnAttackAnimationComplete();
+        }
+    }
+    // Phải là public và không có tham số
+    public void EndAttack()
+    {
+        Debug.Log("🟢 Attack animation ended");
+        animator.ResetTrigger("attack");
+
+        // Gọi OnAttackAnimationComplete từ AttackState1
+        if (currentState is AttackState1 attackState)
+        {
+            attackState.OnAttackAnimationComplete();
+        }
+    }
+
+
+
 }
