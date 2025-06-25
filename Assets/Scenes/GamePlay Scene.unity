@@ -1769,11 +1769,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699086909835716579, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Size.x
-      value: 6.145483
+      value: 5.01394
       objectReference: {fileID: 0}
     - target: {fileID: 4699086909835716579, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Offset.x
-      value: -2.457817
+      value: -3.0235887
       objectReference: {fileID: 0}
     - target: {fileID: 5425784986481657403, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: wallCheckDistance
@@ -1789,11 +1789,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6649412564532419726, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Size.x
-      value: 1.1343126
+      value: 1.063591
       objectReference: {fileID: 0}
     - target: {fileID: 6649412564532419726, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_Offset.x
-      value: -1.0525737
+      value: -0.7579012
       objectReference: {fileID: 0}
     - target: {fileID: 6649412564532419726, guid: 2d099a60dd6b14145a462174e7b360bd, type: 3}
       propertyPath: m_UsedByEffector
