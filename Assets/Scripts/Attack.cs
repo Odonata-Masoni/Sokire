@@ -9,10 +9,15 @@ public class Attack : MonoBehaviour
     private Animator animator;
     private CollisionChecker collisionChecker;
 
+    [Header("Tấn công")]
+    [SerializeField] private GameObject attackHitbox;  // 👈 Kéo object AttackHitbox vào đây từ Inspector
+
     void Awake()
     {
         animator = GetComponent<Animator>();
         collisionChecker = GetComponent<CollisionChecker>();
+        if (attackHitbox != null)
+            attackHitbox.SetActive(false); // Tắt sẵn khi khởi động
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -25,5 +30,18 @@ public class Attack : MonoBehaviour
 
         lastAttackTime = Time.time;
         animator.SetTrigger(AnimationStrings.isAttacking);
+    }
+
+    // Animation Event sẽ gọi các hàm này đúng thời điểm vung đòn
+    public void EnableAttackHitbox()
+    {
+        if (attackHitbox != null)
+            attackHitbox.SetActive(true);
+    }
+
+    public void DisableAttackHitbox()
+    {
+        if (attackHitbox != null)
+            attackHitbox.SetActive(false);
     }
 }

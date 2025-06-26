@@ -9,7 +9,7 @@ public class WolfDetector : MonoBehaviour
         get
         {
             bool inRange = Time.time < lastDetectedTime + graceDuration;
-            Debug.Log($"[WolfDetector] Attack check: {inRange} (now: {Time.time:F2}, until: {lastDetectedTime + graceDuration:F2})");
+            //Debug.Log($"[WolfDetector] Attack check: {inRange} (now: {Time.time:F2}, until: {lastDetectedTime + graceDuration:F2})");
             return inRange;
         }
     }

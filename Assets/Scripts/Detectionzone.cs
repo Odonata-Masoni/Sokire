@@ -13,7 +13,7 @@ public class DetectionZone : MonoBehaviour
         detector = GetComponentInParent<WolfDetector>();
         if (detector == null)
         {
-            Debug.LogError($"[DetectionZone {name}] ❌ Không tìm thấy WolfDetector ở cha!");
+            //Debug.LogError($"[DetectionZone {name}] ❌ Không tìm thấy WolfDetector ở cha!");
         }
     }
 
@@ -21,12 +21,12 @@ public class DetectionZone : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        Debug.Log($"[DetectionZone {name}] TriggerEnter with: {other.name}");
+        //Debug.Log($"[DetectionZone {name}] TriggerEnter with: {other.name}");
 
         if (zoneType == ZoneType.Sight)
         {
             detector.PlayerInSight = true;
-            Debug.Log("🟢 Player detected");
+            //Debug.Log("🟢 Player detected");
         }
 
         if (zoneType == ZoneType.Attack)
@@ -37,7 +37,7 @@ public class DetectionZone : MonoBehaviour
         BoxCollider2D box = GetComponent<BoxCollider2D>();
         if (box != null)
         {
-            Debug.Log($"🧪 {name} Size: {box.size}, Center: {box.offset}");
+            //Debug.Log($"🧪 {name} Size: {box.size}, Center: {box.offset}");
         }
     }
 
@@ -48,7 +48,7 @@ public class DetectionZone : MonoBehaviour
         if (zoneType == ZoneType.Sight)
         {
             detector.PlayerInSight = false;
-            Debug.Log("⚪ Player lost");
+            //Debug.Log("⚪ Player lost");
         }
     }
 }

@@ -18,25 +18,25 @@ public class ChaseState1 : EnemyBaseState
 
     public override void FixedUpdate()
     {
-        Debug.Log($"[ChaseState1] FixedUpdate - Sight: {wolf.Detector.PlayerInSight}, Attack: {wolf.Detector.PlayerInAttackRange}");
+        //Debug.Log($"[ChaseState1] FixedUpdate - Sight: {wolf.Detector.PlayerInSight}, Attack: {wolf.Detector.PlayerInAttackRange}");
 
         if (!wolf.Detector.PlayerInSight && !wolf.Detector.PlayerInAttackRange)
         {
-            Debug.Log("[ChaseState1] ❌ Lost sight of player, switching to Patrol");
+            //Debug.Log("[ChaseState1] ❌ Lost sight of player, switching to Patrol");
             wolf.ChangeState(new PatrolState1(wolf));
             return;
         }
 
         if (wolf.Detector.PlayerInAttackRange)
         {
-            Debug.Log("[ChaseState1] ✅ Player in attack range, switching to Attack");
+            //Debug.Log("[ChaseState1] ✅ Player in attack range, switching to Attack");
             wolf.ChangeState(new AttackState1(wolf));
             return;
         }
 
         if (wolf.LockVelocity)
         {
-            Debug.Log("[ChaseState1] ⛔ LockVelocity == true, skipping movement");
+            //Debug.Log("[ChaseState1] ⛔ LockVelocity == true, skipping movement");
             return;
         }
 
@@ -45,12 +45,12 @@ public class ChaseState1 : EnemyBaseState
 
         if (wolf.CanMove)
         {
-            Debug.Log("[ChaseState1] ✔ Moving forward");
+            //Debug.Log("[ChaseState1] ✔ Moving forward");
             wolf.MoveForward();
         }
         else
         {
-            Debug.Log("[ChaseState1] ⛔ Can't move");
+            //Debug.Log("[ChaseState1] ⛔ Can't move");
             wolf.StopMovement();
         }
     }

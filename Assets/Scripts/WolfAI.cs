@@ -57,11 +57,11 @@ public class WolfAI : MonoBehaviour
 
     public void ChangeState(EnemyBaseState newState)
     {
-        Debug.Log($"[WolfAI] Changing state from {currentState?.GetType().Name} to {newState.GetType().Name}");
+        //Debug.Log($"[WolfAI] Changing state from {currentState?.GetType().Name} to {newState.GetType().Name}");
         currentState?.Exit();
         currentState = newState;
         currentState?.Enter();
-        Debug.Log($"[WolfAI] New currentState: {currentState?.GetType().Name}");
+        //Debug.Log($"[WolfAI] New currentState: {currentState?.GetType().Name}");
     }
 
 
@@ -118,7 +118,7 @@ public class WolfAI : MonoBehaviour
     // Phải là public và không có tham số
     public void EndAttack()
     {
-        Debug.Log("🟢 Attack animation ended");
+        //Debug.Log("🟢 Attack animation ended");
         animator.ResetTrigger("attack");
 
         // Gọi OnAttackAnimationComplete từ AttackState1

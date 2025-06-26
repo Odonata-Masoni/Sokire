@@ -16,4 +16,5 @@ public class AnimationStrings
     public static readonly string attackCD = "attackCD";
     public static readonly string hasTarget = "hasTarget";
     public static readonly string lockVelocity = "lockVelocity";
+    public static readonly string hitTrigger = "hitTrigger";
 }

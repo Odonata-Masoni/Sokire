@@ -25,7 +25,7 @@ public class AttackState1 : EnemyBaseState
         // Nếu không còn thấy player → quay về patrol
         if (!wolf.Detector.PlayerInSight && !wolf.Detector.PlayerInAttackRange)
         {
-            Debug.Log("[AttackState1] Player gone, switching to Patrol");
+            //Debug.Log("[AttackState1] Player gone, switching to Patrol");
             wolf.ChangeState(new PatrolState1(wolf));
             return;
         }
@@ -33,7 +33,7 @@ public class AttackState1 : EnemyBaseState
         // Nếu vẫn thấy player nhưng ngoài tầm đánh → đuổi tiếp
         if (!wolf.Detector.PlayerInAttackRange && wolf.Detector.PlayerInSight)
         {
-            Debug.Log("[AttackState1] Player not in attack range, chasing again");
+            //Debug.Log("[AttackState1] Player not in attack range, chasing again");
             wolf.ChangeState(new ChaseState1(wolf));
             return;
         }
@@ -59,7 +59,7 @@ public class AttackState1 : EnemyBaseState
 
     private void StartAttack()
     {
-        Debug.Log("[AttackState1] Triggering attack");
+        //Debug.Log("[AttackState1] Triggering attack");
         wolf.TriggerAttack();
         lastAttackTime = Time.time;
         isAttacking = true;
