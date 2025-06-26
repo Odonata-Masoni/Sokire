@@ -84,20 +84,23 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    public bool Hit(float damage, Vector2 knockback)
+    public void Hit(float damage, Vector2 knockback)
     {
-        if (IsAlive && !isInvincible)
+        Debug.Log($"🟥 Damageable.Hit called! Damage: {damage}");
+
+        if (!IsAlive)
+            return;
+
+        Health -= damage;
+        if (Health <= 0)
         {
-            Health -= damage;
-            animator.SetTrigger(AnimationStrings.hitTrigger);
-            LockVelocity = true;
-            damageableHit?.Invoke(damage, knockback);    // Gọi cho Skeleton
-            damageableHitP?.Invoke(damage, knockback, LockVelocity);   // Gọi cho PlayerController
-            CharacterEvents.characterDamaged.Invoke(gameObject, damage);
-            Debug.Log($"Hit with damage: {damage}, Remaining Health: {Health}");
-            return true;
+            Health = 0;
+            IsAlive = false;
+            Debug.Log($"🟥 Enemy died!");
+            // Death logic...
         }
-        return false;
+
+        Debug.Log($"🟥 Health updated to: {Health} / {MaxHealth}");
     }
     //public bool Heal(float healthRestore)
     //{

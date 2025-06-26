@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 953667096555825652}
   - component: {fileID: 2949045724872867303}
+  - component: {fileID: 4854608769930898956}
+  - component: {fileID: 7979425698549840129}
   m_Layer: 8
   m_Name: PlayerAttackCollider
   m_TagString: Untagged
@@ -85,6 +87,45 @@ PolygonCollider2D:
       - {x: 1.1997437, y: -0.006931316}
       - {x: 1.3418065, y: 0.057216927}
   m_UseDelaunayMesh: 0
+--- !u!50 &4854608769930898956
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656826695840060833}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &7979425698549840129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656826695840060833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24dbf281e4f85684d85c9f13e4eba1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7579742121446076466
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCooldown: 0.5
   attackHitbox: {fileID: 5656826695840060833}
+  damage: 20
 --- !u!114 &3459679351761363704
 MonoBehaviour:
   m_ObjectHideFlags: 0
