@@ -334,7 +334,11 @@ GameObject:
   - component: {fileID: 1366921825017737304}
   - component: {fileID: 5425784986481657403}
   - component: {fileID: 4636460689520107158}
+  - component: {fileID: 1482831900651138723}
+  - component: {fileID: 2513240587708903285}
   - component: {fileID: 791817713732462061}
+  - component: {fileID: 1790377591475651065}
+  - component: {fileID: 2696138970085363652}
   - component: {fileID: 4091055165738585772}
   m_Layer: 0
   m_Name: Wolf
@@ -511,6 +515,45 @@ MonoBehaviour:
   walkStopRate: 0.05
   wallStuckTime: 0.3
   Detector: {fileID: 0}
+--- !u!114 &1482831900651138723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069435392800439849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029716407c2735c469763d49ebec47fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageableHit:
+    m_PersistentCalls:
+      m_Calls: []
+  damageableHitP:
+    m_PersistentCalls:
+      m_Calls: []
+  damageableDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _maxHealth: 50
+  _health: 50
+  _isAlive: 1
+  isInvincibilityTime: 0.25
+--- !u!114 &2513240587708903285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069435392800439849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa1097ebc407dc448c02c86d6c8bb7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  attackHitbox: {fileID: 5038032047986031873}
 --- !u!95 &791817713732462061
 Animator:
   serializedVersion: 5
@@ -532,6 +575,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1790377591475651065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069435392800439849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38098efbfa5dcf43a22a8d93d893cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoneType: 0
+--- !u!114 &2696138970085363652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069435392800439849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a8e7d1484564547a9a739b3d8d6a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graceDuration: 0.5
 --- !u!114 &4091055165738585772
 MonoBehaviour:
   m_ObjectHideFlags: 0
