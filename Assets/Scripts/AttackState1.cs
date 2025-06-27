@@ -70,5 +70,21 @@ public class AttackState1 : EnemyBaseState
     {
         Debug.Log("[AttackState1] OnAttackAnimationComplete()");
         isAttacking = false;
+
+        // Nếu player vẫn còn trong vùng đánh, giữ lại state Attack
+        if (wolf.Detector.PlayerInAttackRange)
+        {
+            // giữ lại
+            Debug.Log("[AttackState1] Still in attack range – waiting for cooldown");
+        }
+        else if (wolf.Detector.PlayerInSight)
+        {
+            wolf.ChangeState(new ChaseState1(wolf));
+        }
+        else
+        {
+            wolf.ChangeState(new PatrolState1(wolf));
+        }
     }
+
 }

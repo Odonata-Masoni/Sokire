@@ -34,7 +34,7 @@ public class ChaseState1 : EnemyBaseState
             return;
         }
 
-        if (wolf.LockVelocity)
+        if (wolf.IsVelocityLocked)
         {
             //Debug.Log("[ChaseState1] ⛔ LockVelocity == true, skipping movement");
             return;

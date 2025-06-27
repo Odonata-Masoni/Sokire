@@ -88,20 +88,54 @@ public class Damageable : MonoBehaviour
     {
         Debug.Log($"🟥 Damageable.Hit called! Damage: {damage}");
 
-        if (!IsAlive)
+        if (!IsAlive || isInvincible)
             return;
 
         Health -= damage;
+
+        animator.SetTrigger(AnimationStrings.hitTrigger);
+        LockVelocity = true;
+        Debug.Log("🔒 LockVelocity set to TRUE");
+
+        isInvincible = true;
+        timeSinceHit = 0;
+
+        damageableHit?.Invoke(damage, knockback);
+        damageableHitP?.Invoke(damage, knockback, LockVelocity);
+
         if (Health <= 0)
         {
             Health = 0;
             IsAlive = false;
-            Debug.Log($"🟥 Enemy died!");
-            // Death logic...
+            Debug.Log($"☠️ Entity died!");
         }
 
-        Debug.Log($"🟥 Health updated to: {Health} / {MaxHealth}");
+        Debug.Log($"❤️ Health updated to: {Health} / {MaxHealth}");
+
+        // ✅ Thay animation event bằng coroutine
+        StartCoroutine(UnlockVelocityAfterDelay(0.55f));
     }
+
+    private IEnumerator UnlockVelocityAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        LockVelocity = false;
+        animator.SetBool(AnimationStrings.canMove, true);
+        Debug.Log("🟢 LockVelocity set to FALSE, canMove = true");
+
+        // Nếu đang là AttackState1 → kết thúc đòn đánh
+        if (TryGetComponent<WolfAI>(out var wolf))
+        {
+            wolf.OnAttackAnimationComplete(); // Gọi kết thúc animation
+        }
+    }
+
+
+
+
+
+
+
     //public bool Heal(float healthRestore)
     //{
     //    if (IsAlive && Health < MaxHealth)

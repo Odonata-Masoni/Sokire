@@ -12,7 +12,8 @@ public class PatrolState1 : EnemyBaseState
 
     public override void FixedUpdate()
     {
-        if (wolf.LockVelocity) return;
+        if (wolf.IsVelocityLocked) return;
+
 
         if (wolf.CanMove)
             wolf.MoveForward();

@@ -105,7 +105,7 @@ public class WolfAI : MonoBehaviour
     }
 
     public bool CanMove => animator.GetBool(AnimationStrings.canMove);
-    public bool LockVelocity => damageable.LockVelocity;
+    public bool IsVelocityLocked => damageable.LockVelocity;
     public CollisionChecker Touching => touchingDirection;
 
     public void OnAttackAnimationComplete()
