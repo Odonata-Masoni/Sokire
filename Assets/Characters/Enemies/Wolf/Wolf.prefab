@@ -197,7 +197,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.6338379, y: 0}
+  m_Offset: {x: -2.532581, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -208,7 +208,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.4931073, y: 1}
+  m_Size: {x: 2.695621, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &5038032047986031873
 GameObject:
@@ -339,7 +339,6 @@ GameObject:
   - component: {fileID: 791817713732462061}
   - component: {fileID: 1790377591475651065}
   - component: {fileID: 2696138970085363652}
-  - component: {fileID: 4091055165738585772}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
@@ -564,7 +563,7 @@ Animator:
   m_GameObject: {fileID: 7069435392800439849}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91845d3187b4ebc419e4f37edfbf203f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -601,28 +600,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graceDuration: 0.5
---- !u!114 &4091055165738585772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7069435392800439849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 029716407c2735c469763d49ebec47fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageableHit:
-    m_PersistentCalls:
-      m_Calls: []
-  damageableHitP:
-    m_PersistentCalls:
-      m_Calls: []
-  damageableDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  _maxHealth: 100
-  _health: 100
-  _isAlive: 1
-  isInvincibilityTime: 0.25
