@@ -18,7 +18,6 @@ public class Damageable : MonoBehaviour
 
     protected Animator animator;
 
-    // Trạng thái sống/chết
     private bool isAlive = true;
     public bool IsAlive
     {
@@ -37,21 +36,9 @@ public class Damageable : MonoBehaviour
 
             Debug.Log("IsAlive set to: " + value);
 
-            //if (!value)
-            //{
-            //    // 👉 Tắt tất cả collider
-            //    foreach (var col in GetComponentsInChildren<Collider2D>())
-            //    {
-            //        col.enabled = false;
-            //    }
-
-            //    OnDie?.Invoke();
-            //}
         }
     }
 
-
-    // Lock di chuyển khi bị hit
     public bool LockVelocity
     {
         get => animator.GetBool(AnimationStrings.lockVelocity);
@@ -78,9 +65,6 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Gọi khi nhân vật nhận sát thương
-    /// </summary>
     public virtual void Hit(float damage, Vector2 knockback)
     {
         if (!IsAlive || isInvincible) return;

@@ -4,6 +4,8 @@ public class PlayerDamageable : MonoBehaviour
 {
     private Damageable damageable;
 
+    [SerializeField] private GameOverUI gameOverUI;
+
     private void Awake()
     {
         damageable = GetComponent<Damageable>();
@@ -26,10 +28,29 @@ public class PlayerDamageable : MonoBehaviour
         Debug.Log("🟥 Player bị đánh: " + dmg);
         // TODO: Play animation, UI flash, shake camera...
     }
+    public void OnDeathAnimationFinished()
+    {
+        if (gameOverUI != null)
+        {
+            gameOverUI.ShowGameOver();
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ GameOverUI chưa được gán!");
+        }
+    }
 
     private void OnDeath()
     {
         Debug.Log("☠️ Player chết");
-        // TODO: GameOver UI, reload scene, disable controls...
+
+        if (gameOverUI != null)
+        {
+            gameOverUI.ShowGameOver();
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ Chưa gán GameOverUI vào PlayerDamageable");
+        }
     }
 }
