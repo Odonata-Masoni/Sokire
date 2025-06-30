@@ -48,7 +48,14 @@ public class DetectionZone : MonoBehaviour
         if (zoneType == ZoneType.Sight)
         {
             detector.PlayerInSight = false;
-            //Debug.Log("⚪ Player lost");
+            Debug.Log("⚪ Player lost (Sight)");
+        }
+
+        if (zoneType == ZoneType.Attack)
+        {
+            Debug.Log("⚪ Player exited attack zone");
+            // Không cần reset thủ công, vì PlayerInAttackRange dùng timestamp.
         }
     }
+
 }

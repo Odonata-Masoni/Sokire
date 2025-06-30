@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class AttackState1 : EnemyBaseState
 {
-    private float attackCooldown = 1.5f;
+    private float attackCooldown = 0.75f;
     private float lastAttackTime;
     private bool isAttacking;
+
+    private bool waitAfterAttack = false;
+    private float waitTimer = 0f;
+    private float postAttackBuffer = 0.15f; // Delay ngắn sau khi đánh xong
 
     public AttackState1(WolfAI wolf) : base(wolf) { }
 
@@ -19,35 +24,52 @@ public class AttackState1 : EnemyBaseState
 
     public override void Update()
     {
-        // Trong lúc đang attack thì không xét chuyển trạng thái
+        Debug.Log($"[AttackState1] Update - isAttacking: {isAttacking}, waitAfterAttack: {waitAfterAttack}, InSight: {wolf.Detector.PlayerInSight}, InAttack: {wolf.Detector.PlayerInAttackRange}");
+
+        // Nếu đang tấn công thì không xử lý gì thêm
         if (isAttacking) return;
 
-        // Nếu không còn thấy player → quay về patrol
+        // Nếu vừa đánh xong thì chờ một chút trước khi xét đổi state
+        if (waitAfterAttack)
+        {
+            waitTimer -= Time.deltaTime;
+            if (waitTimer <= 0f)
+            {
+                waitAfterAttack = false;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        // Nếu không còn thấy player
         if (!wolf.Detector.PlayerInSight && !wolf.Detector.PlayerInAttackRange)
         {
-            //Debug.Log("[AttackState1] Player gone, switching to Patrol");
+            Debug.Log("[AttackState1] Player lost - switching to Patrol");
             wolf.ChangeState(new PatrolState1(wolf));
             return;
         }
 
-        // Nếu vẫn thấy player nhưng ngoài tầm đánh → đuổi tiếp
+        // Nếu thấy player nhưng không trong tầm đánh
         if (!wolf.Detector.PlayerInAttackRange && wolf.Detector.PlayerInSight)
         {
-            //Debug.Log("[AttackState1] Player not in attack range, chasing again");
+            Debug.Log("[AttackState1] Player out of range - switching to Chase");
             wolf.ChangeState(new ChaseState1(wolf));
             return;
         }
 
-        // Nếu player còn trong vùng đánh → đánh tiếp sau cooldown
+        // Nếu đủ cooldown thì tấn công tiếp
         if (Time.time - lastAttackTime >= attackCooldown)
         {
+            Debug.Log("[AttackState1] Cooldown passed - starting next attack");
             StartAttack();
         }
     }
 
     public override void FixedUpdate()
     {
-        wolf.StopMovement(); // Luôn giữ đứng yên khi attack
+        wolf.StopMovement(); // Đảm bảo đứng yên khi tấn công
     }
 
     public override void Exit()
@@ -55,11 +77,12 @@ public class AttackState1 : EnemyBaseState
         Debug.Log("[AttackState1] Exit Attack");
         wolf.SetCanMove(true);
         isAttacking = false;
+        waitAfterAttack = false;
     }
 
     private void StartAttack()
     {
-        //Debug.Log("[AttackState1] Triggering attack");
+        Debug.Log("[AttackState1] StartAttack()");
         wolf.TriggerAttack();
         lastAttackTime = Time.time;
         isAttacking = true;
@@ -68,23 +91,35 @@ public class AttackState1 : EnemyBaseState
     // Gọi từ animation event
     public void OnAttackAnimationComplete()
     {
-        Debug.Log("[AttackState1] OnAttackAnimationComplete()");
+        wolf.StartCoroutine(HandleAttackEndDelayed());
+    }
+
+    private IEnumerator HandleAttackEndDelayed()
+    {
+        yield return null; // Đợi 1 frame để các collider được cập nhật
+
+        Debug.Log("[AttackState1] Attack animation complete (delayed)");
         isAttacking = false;
 
-        // Nếu player vẫn còn trong vùng đánh, giữ lại state Attack
+        // Nếu player còn trong vùng attack → giữ state Attack, chờ cooldown
         if (wolf.Detector.PlayerInAttackRange)
         {
-            // giữ lại
-            Debug.Log("[AttackState1] Still in attack range – waiting for cooldown");
+            Debug.Log("[AttackState1] Player vẫn trong attack range - giữ trạng thái Attack");
+            waitAfterAttack = true;
+            waitTimer = postAttackBuffer;
+            yield break;
         }
-        else if (wolf.Detector.PlayerInSight)
+
+        // Nếu không còn trong vùng đánh
+        if (wolf.Detector.PlayerInSight)
         {
+            Debug.Log("[AttackState1] Player còn trong Sight - chuyển sang Chase");
             wolf.ChangeState(new ChaseState1(wolf));
         }
         else
         {
+            Debug.Log("[AttackState1] Player biến mất - chuyển sang Patrol");
             wolf.ChangeState(new PatrolState1(wolf));
         }
     }
-
 }
