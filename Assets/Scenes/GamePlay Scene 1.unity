@@ -2129,7 +2129,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Replay
+  m_text: 'Try Again
 
 '
   m_isRightToLeft: 0
