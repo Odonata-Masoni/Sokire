@@ -511,11 +511,11 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 8, y: -3, z: 0}
+  - first: {x: 7, y: -3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -524,8 +524,8 @@ Tilemap:
   - first: {x: 21, y: -3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -563,17 +563,17 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 29
+  - m_RefCount: 31
     m_Data: {fileID: 11400000, guid: c45a85f99dc45b74fb0c2c0851fb9d1a, type: 2}
-  - m_RefCount: 2
-    m_Data: {fileID: 11400000, guid: 024eaab7f57f18940b8bf344a944f635, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: a1a27f86c85bc054ca2e094681b03420, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 29
+  - m_RefCount: 31
     m_Data: {fileID: -411012803, guid: 99672f6f11e127c44ae10f2aa8c9e0f4, type: 3}
-  - m_RefCount: 2
-    m_Data: {fileID: -937409708, guid: 99672f6f11e127c44ae10f2aa8c9e0f4, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 3
     m_Data: {fileID: 507344254, guid: 99672f6f11e127c44ae10f2aa8c9e0f4, type: 3}
   m_TileMatrixArray:
@@ -689,13 +689,13 @@ CompositeCollider2D:
         Y: -20000000
       - X: 210000000
         Y: -30000000
-      - X: 90000000
+      - X: 80000000
         Y: -30000000
-      - X: 90000000
-        Y: -20000000
       - X: 80000000
         Y: -20000000
-      - X: 80000000
+      - X: 70000000
+        Y: -20000000
+      - X: 70000000
         Y: -30000000
       - X: -70000000
         Y: -30000000
@@ -720,10 +720,10 @@ CompositeCollider2D:
       - {x: 21.999971, y: -2}
       - {x: 21, y: -2.0000293}
       - {x: 20.999971, y: -3}
-      - {x: 9, y: -2.9999707}
-      - {x: 8.99997, y: -2}
-      - {x: 8, y: -2.0000293}
-      - {x: 7.9999704, y: -3}
+      - {x: 8, y: -2.9999707}
+      - {x: 7.9999704, y: -2}
+      - {x: 7, y: -2.0000293}
+      - {x: 6.9999704, y: -3}
       - {x: -7, y: -3.0000293}
       - {x: -6.9999704, y: -4}
   m_VertexDistance: 0.0005
@@ -1143,9 +1143,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 668846674253239456, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832630931188727249, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8061845575277587803, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
       propertyPath: m_Name
       value: Wolf Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8061845575277587803, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9025624368550931538, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1661,6 +1673,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 668846674253239456, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832630931188727249, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8061845575277587803, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
       propertyPath: m_Name
       value: Wolf
@@ -1721,6 +1741,10 @@ PrefabInstance:
     - target: {fileID: 3173924089199875450, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: _health
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173924089199875450, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
+      propertyPath: maxHealth
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 3173924089199875450, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: _maxHealth

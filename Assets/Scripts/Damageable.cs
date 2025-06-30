@@ -1,132 +1,134 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class Damageable : MonoBehaviour
 {
-    public UnityEvent<float, Vector2> damageableHit;    // Cho Skeleton.OnHit
-    public UnityEvent<float, Vector2, bool> damageableHitP;   // Cho PlayerController.OnHitP
-    public UnityEvent damageableDeath;
+    [Header("Health")]
+    [SerializeField] private float maxHealth = 100f;
+    private float currentHealth;
 
-    Animator animator;
+    [Header("Invincibility")]
+    [SerializeField] private float invincibilityTime = 0.25f;
+    private bool isInvincible = false;
+    private float timeSinceHit = 0f;
 
-    [SerializeField] private float _maxHealth = 100f;
-    public float MaxHealth
-    {
-        get => _maxHealth;
-        set => _maxHealth = value;
-    }
+    [Header("Events")]
+    public UnityEvent<float, Vector2> OnTakeDamage;
+    public UnityEvent OnDie;
 
-    [SerializeField] private float _health = 100f;
-    public float Health
-    {
-        get => _health;
-        set
-        {
-            _health = value;
-            Debug.Log($"❤️ Health updated to: {_health} / {MaxHealth}");
-            if (_health <= 0 && IsAlive)
-            {
-                _health = 0;
-                IsAlive = false; // Gọi logic chết duy nhất ở đây
-                Debug.Log($"☠️ Entity died!");
-            }
-        }
-    }
+    protected Animator animator;
 
-    [SerializeField] private bool _isAlive = true;
+    // Trạng thái sống/chết
+    private bool isAlive = true;
     public bool IsAlive
     {
-        get => _isAlive;
-        set
+        get => isAlive;
+        private set
         {
-            if (!_isAlive && !value) return; // ⚠️ Nếu đã chết rồi thì không xử lý lại
+            if (isAlive == value) return;
+            isAlive = value;
 
-            _isAlive = value;
-            animator.SetBool(AnimationStrings.isAlive, value);
+            if (animator != null)
+            {
+                animator.SetBool(AnimationStrings.isAlive, value);
+                animator.SetBool(AnimationStrings.canMove, false);
+                animator.SetBool(AnimationStrings.lockVelocity, true);
+            }
+
             Debug.Log("IsAlive set to: " + value);
 
-            if (!value)
-            {
-                damageableDeath.Invoke();
-            }
+            //if (!value)
+            //{
+            //    // 👉 Tắt tất cả collider
+            //    foreach (var col in GetComponentsInChildren<Collider2D>())
+            //    {
+            //        col.enabled = false;
+            //    }
+
+            //    OnDie?.Invoke();
+            //}
         }
     }
 
+
+    // Lock di chuyển khi bị hit
     public bool LockVelocity
     {
         get => animator.GetBool(AnimationStrings.lockVelocity);
         set => animator.SetBool(AnimationStrings.lockVelocity, value);
     }
 
-    private bool isInvincible = false;
-    private float timeSinceHit = 0f;
-    public float isInvincibilityTime = 0.25f;
-
-    private void Awake()
+    protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
-        damageableHit ??= new UnityEvent<float, Vector2>();
-        damageableHitP ??= new UnityEvent<float, Vector2, bool>();
-        Health = MaxHealth;
+        currentHealth = maxHealth;
+        isAlive = true;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (isInvincible)
         {
             timeSinceHit += Time.deltaTime;
-            if (timeSinceHit > isInvincibilityTime)
+            if (timeSinceHit > invincibilityTime)
             {
                 isInvincible = false;
-                timeSinceHit = 0;
+                timeSinceHit = 0f;
             }
         }
     }
 
-    public void Hit(float damage, Vector2 knockback)
+    /// <summary>
+    /// Gọi khi nhân vật nhận sát thương
+    /// </summary>
+    public virtual void Hit(float damage, Vector2 knockback)
     {
-        Debug.Log($"🟥 Damageable.Hit called! Damage: {damage}");
+        if (!IsAlive || isInvincible) return;
 
-        if (!IsAlive || isInvincible)
-            return;
+        currentHealth -= damage;
+        Debug.Log($"🟥 {gameObject.name} took {damage} damage!");
 
-        Health -= damage;
+        OnTakeDamage?.Invoke(damage, knockback);
+
+        if (currentHealth <= 0)
+        {
+            IsAlive = false;
+        }
 
         animator.SetTrigger(AnimationStrings.hitTrigger);
         LockVelocity = true;
-        Debug.Log("🔒 LockVelocity set to TRUE");
-
         isInvincible = true;
         timeSinceHit = 0;
 
-        damageableHit?.Invoke(damage, knockback);
-        damageableHitP?.Invoke(damage, knockback, LockVelocity);
-
-        if (IsAlive) // Nếu chưa chết, thì mới unlock sau delay
+        if (IsAlive)
         {
             StartCoroutine(UnlockVelocityAfterDelay(0.55f));
         }
     }
 
-    private IEnumerator UnlockVelocityAfterDelay(float delay)
+    protected virtual System.Collections.IEnumerator UnlockVelocityAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        if (!IsAlive)
-        {
-            Debug.Log("🔕 UnlockVelocity canceled (dead)");
-            yield break;
-        }
+        if (!IsAlive) yield break;
 
         LockVelocity = false;
         animator.SetBool(AnimationStrings.canMove, true);
-        Debug.Log("🟢 LockVelocity set to FALSE, canMove = true");
 
         if (TryGetComponent<WolfAI>(out var wolf))
         {
-            wolf.OnAttackAnimationComplete(); // Gọi kết thúc animation nếu còn sống
+            wolf.OnAttackAnimationComplete();
         }
+    }
+
+    public float GetCurrentHealth() => currentHealth;
+    public float GetMaxHealth() => maxHealth;
+
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+        IsAlive = true;
+        isInvincible = false;
+        timeSinceHit = 0f;
     }
 }

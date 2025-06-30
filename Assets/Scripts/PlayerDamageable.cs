@@ -1,18 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerDamageable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Damageable damageable;
+
+    private void Awake()
     {
-        
+        damageable = GetComponent<Damageable>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        damageable.OnTakeDamage.AddListener(OnHit);
+        damageable.OnDie.AddListener(OnDeath);
+    }
+
+    private void OnDisable()
+    {
+        damageable.OnTakeDamage.RemoveListener(OnHit);
+        damageable.OnDie.RemoveListener(OnDeath);
+    }
+
+    private void OnHit(float dmg, Vector2 knockback)
+    {
+        Debug.Log("🟥 Player bị đánh: " + dmg);
+        // TODO: Play animation, UI flash, shake camera...
+    }
+
+    private void OnDeath()
+    {
+        Debug.Log("☠️ Player chết");
+        // TODO: GameOver UI, reload scene, disable controls...
     }
 }
