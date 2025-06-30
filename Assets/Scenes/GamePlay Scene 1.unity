@@ -1151,6 +1151,18 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 5192769851671031411, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533870040270124177, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_Size.x
+      value: 2.836584
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533870040270124177, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_Offset.x
+      value: -2.3555079
+      objectReference: {fileID: 0}
     - target: {fileID: 8061845575277587803, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
       propertyPath: m_Name
       value: Wolf Variant
@@ -1680,6 +1692,22 @@ PrefabInstance:
     - target: {fileID: 1832630931188727249, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
       propertyPath: maxHealth
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5192769851671031411, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533870040270124177, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_Size.x
+      value: 2.5696907
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533870040270124177, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_Offset.x
+      value: -2.4415264
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671956850179923022, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8061845575277587803, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
       propertyPath: m_Name
