@@ -5,12 +5,13 @@ public class MenuController : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("GamePlay Scene 1"); // Đổi tên thành đúng scene bạn dùng
+        GameSessionManager.Instance?.IncrementRun(); // ✅ Tăng tại đây
+
+        SceneManager.LoadScene("GamePlay Scene 1"); // Đổi đúng tên scene chơi
     }
 
     public void QuitGame()
     {
-        Debug.Log("Exit button pressed - Application.Quit() called");
         Application.Quit();
     }
 }

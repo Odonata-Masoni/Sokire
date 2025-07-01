@@ -8,24 +8,26 @@ public class GameOverUI : MonoBehaviour
     public void ShowGameOver()
     {
         gameOverPanel.SetActive(true);
-        Time.timeScale = 0f; // Dừng game
+        PauseMenu.IsGameOver = true;
+        Time.timeScale = 0f;
     }
 
     public void Replay()
     {
+        PauseMenu.IsGameOver = false;
         Time.timeScale = 1f;
 
-        // ✅ Tính lại số run
-        GameSessionManager.Instance.IncrementRun();
+        // ✅ Tính lại số Run
+        GameSessionManager.Instance?.IncrementRun();
 
         // Load lại scene hiện tại
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-
     public void QuitGame()
     {
-        Application.Quit();
-        Debug.Log("Quit game called (chỉ thấy trong Build, không thấy trong Editor)");
+        PauseMenu.IsGameOver = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 }
