@@ -10,6 +10,9 @@ public class GameOverUI : MonoBehaviour
         gameOverPanel.SetActive(true);
         PauseMenu.IsGameOver = true;
         Time.timeScale = 0f;
+
+        // ❌ Xóa file JSON khi chết để không còn nút Continue
+        SaveSystem.DeleteSave();
     }
 
     public void Replay()
@@ -17,10 +20,7 @@ public class GameOverUI : MonoBehaviour
         PauseMenu.IsGameOver = false;
         Time.timeScale = 1f;
 
-        // ✅ Tính lại số Run
         GameSessionManager.Instance?.IncrementRun();
-
-        // Load lại scene hiện tại
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

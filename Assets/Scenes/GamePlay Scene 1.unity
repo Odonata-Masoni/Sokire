@@ -2214,6 +2214,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 099499423e9b82440a2b8f7094d194fa, type: 3}
+--- !u!1 &858704981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 858704983}
+  - component: {fileID: 858704982}
+  m_Layer: 0
+  m_Name: LoadGameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &858704982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858704981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68fe0625a0f02144928b69450f967dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8098118353195908903}
+--- !u!4 &858704983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858704981}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -77.89296, y: 889.32495, z: -16.56448}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &946880953
 GameObject:
   m_ObjectHideFlags: 0
@@ -3460,6 +3505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 793721732}
+  player: {fileID: 8098118353195908903}
 --- !u!4 &1675759165
 Transform:
   m_ObjectHideFlags: 0
@@ -4393,6 +4439,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
+--- !u!1 &8098118353195908903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7579742121446076466, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
+  m_PrefabInstance: {fileID: 8098118353195908902}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4412,3 +4463,4 @@ SceneRoots:
   - {fileID: 946880957}
   - {fileID: 793721736}
   - {fileID: 1675759165}
+  - {fileID: 858704983}

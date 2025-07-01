@@ -5,7 +5,7 @@ public class Damageable : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private float maxHealth = 100f;
-    private float currentHealth;
+    public float currentHealth;
 
     [Header("Invincibility")]
     [SerializeField] private float invincibilityTime = 0.25f;
@@ -115,4 +115,10 @@ public class Damageable : MonoBehaviour
         isInvincible = false;
         timeSinceHit = 0f;
     }
+    public void SetCurrentHealth(float value)
+    {
+        currentHealth = Mathf.Clamp(value, 0, maxHealth);
+        IsAlive = currentHealth > 0;
+    }
+
 }
