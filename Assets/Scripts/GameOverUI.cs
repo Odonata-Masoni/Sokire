@@ -14,8 +14,14 @@ public class GameOverUI : MonoBehaviour
     public void Replay()
     {
         Time.timeScale = 1f;
+
+        // ✅ Tính lại số run
+        GameSessionManager.Instance.IncrementRun();
+
+        // Load lại scene hiện tại
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
 
     public void QuitGame()
     {

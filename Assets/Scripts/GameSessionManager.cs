@@ -8,7 +8,6 @@ public class GameSessionManager : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton pattern + lưu lại giữa các scene
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -18,9 +17,19 @@ public class GameSessionManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Lấy RunCount từ lần trước (nếu có)
+#if !UNITY_EDITOR
+    // 👉 Khi không chạy trong Unity Editor (tức là bản build)
+    if (!PlayerPrefs.HasKey("RunCount"))
+    {
+        PlayerPrefs.SetInt("RunCount", 0); // hoặc dùng DeleteAll() nếu cần reset toàn bộ
+        PlayerPrefs.Save();
+        Debug.Log("🧼 Reset RunCount về 0 khi build lần đầu");
+    }
+#endif
+
         RunCount = PlayerPrefs.GetInt("RunCount", 0);
     }
+
 
     public void IncrementRun()
     {
