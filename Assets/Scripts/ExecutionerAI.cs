@@ -14,6 +14,8 @@ public class ExecutionerAI : MonoBehaviour
     [SerializeField] private Collider2D attackHitbox;
     [SerializeField] private float attackDamage = 20f;
     [SerializeField] private Vector2 knockback = new Vector2(3f, 1f);
+    [SerializeField] private float attackCooldown = 1.2f;
+    private float lastAttackTime = -999f;
 
     private bool isMoving = false;
     private bool canMove = true;
@@ -30,11 +32,13 @@ public class ExecutionerAI : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         damageable = GetComponent<Damageable>();
+
+        //if (attackHitbox != null)
+        //    attackHitbox.enabled = false;
     }
 
     void FixedUpdate()
     {
-        // Dừng mọi thứ nếu không còn sống
         if (damageable != null && !damageable.IsAlive)
         {
             rb.velocity = Vector2.zero;
@@ -42,7 +46,7 @@ public class ExecutionerAI : MonoBehaviour
             return;
         }
 
-        if (PlayerInAttackZone && !isAttacking)
+        if (PlayerInAttackZone && !isAttacking && Time.time - lastAttackTime >= attackCooldown)
         {
             StartAttack();
         }
@@ -59,7 +63,6 @@ public class ExecutionerAI : MonoBehaviour
         UpdateAnimator();
     }
 
-
     private void Move()
     {
         rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
@@ -70,8 +73,6 @@ public class ExecutionerAI : MonoBehaviour
         {
             Flip();
             direction *= -1;
-
-            // Cập nhật lại vị trí bắt đầu mới để tránh flip liên tục
             startPosition = transform.position.x;
         }
     }
@@ -92,20 +93,25 @@ public class ExecutionerAI : MonoBehaviour
     {
         isAttacking = true;
         isMoving = false;
-        rb.velocity = Vector2.zero; // Dừng lại khi tấn công
+        rb.velocity = Vector2.zero;
+        lastAttackTime = Time.time;
         animator.SetTrigger("attack");
+        Debug.Log("⚔️ Executioner bắt đầu tấn công!");
     }
 
-    // Gọi từ Animation Event cuối đòn tấn công
     public void EndAttack()
     {
         isAttacking = false;
+        Debug.Log("⏹ Kết thúc đòn tấn công");
     }
 
-    // Gọi từ Animation Event tại frame gây damage
     public void DealDamage()
     {
-        if (attackHitbox == null) return;
+        if (attackHitbox == null)
+        {
+            Debug.LogWarning("⚠️ attackHitbox chưa được gán.");
+            return;
+        }
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(
             attackHitbox.bounds.center,
@@ -113,15 +119,18 @@ public class ExecutionerAI : MonoBehaviour
             0f
         );
 
+        Debug.Log($"🟥 Số đối tượng bị trúng đòn: {hits.Length}");
+
         foreach (var hit in hits)
         {
             if (hit.CompareTag("Player"))
             {
-                Damageable dmg = hit.GetComponent<Damageable>();
+                var dmg = hit.GetComponent<Damageable>();
                 if (dmg != null)
                 {
                     Vector2 knockDir = (hit.transform.position.x < transform.position.x) ? Vector2.left : Vector2.right;
                     dmg.Hit(attackDamage, knockback * knockDir);
+                    Debug.Log("🎯 Player đã bị trúng đòn");
                 }
             }
         }
@@ -139,15 +148,12 @@ public class ExecutionerAI : MonoBehaviour
     public void SetCanMove(bool value)
     {
         canMove = value;
-        if (!canMove)
+        if (!value)
         {
             isMoving = false;
             rb.velocity = Vector2.zero;
         }
     }
 
-    public bool IsMoving()
-    {
-        return isMoving;
-    }
+    public bool IsMoving() => isMoving;
 }
