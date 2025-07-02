@@ -2,14 +2,7 @@
 
 public class AttackZone : MonoBehaviour
 {
-    private ExecutionerAI executioner;
-
-    private void Start()
-    {
-        executioner = GetComponentInParent<ExecutionerAI>();
-        if (executioner == null)
-            Debug.LogWarning("⚠️ Không tìm thấy ExecutionerAI trong parent!");
-    }
+    public ExecutionerAI executioner;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -25,7 +18,7 @@ public class AttackZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             executioner.PlayerInAttackZone = false;
-            Debug.Log("🔴 Player rời vùng AttackZone");
+            Debug.Log("🔴 Player rời khỏi vùng AttackZone");
         }
     }
 }

@@ -666,11 +666,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300461242}
   m_CullTransparentMesh: 1
---- !u!61 &330266101 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 1716972955698156066, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
-  m_PrefabInstance: {fileID: 2173197035172296074}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &425769523
 GameObject:
   m_ObjectHideFlags: 0
@@ -3005,6 +3000,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405302290}
   m_CullTransparentMesh: 1
+--- !u!60 &1410097531 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5320785243877824169, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+  m_PrefabInstance: {fileID: 2173197035172296074}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1420251174
 GameObject:
   m_ObjectHideFlags: 0
@@ -4294,10 +4294,18 @@ PrefabInstance:
     - target: {fileID: 73616831191295107, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
       propertyPath: attackHitbox
       value: 
-      objectReference: {fileID: 330266101}
+      objectReference: {fileID: 1410097531}
+    - target: {fileID: 1716972955698156066, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+      propertyPath: m_Size.x
+      value: 1.1991155
+      objectReference: {fileID: 0}
     - target: {fileID: 1716972955698156066, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
       propertyPath: m_Size.y
       value: 1.0315703
+      objectReference: {fileID: 0}
+    - target: {fileID: 1716972955698156066, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+      propertyPath: m_Offset.x
+      value: -1.049558
       objectReference: {fileID: 0}
     - target: {fileID: 1716972955698156066, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
       propertyPath: m_Offset.y
@@ -4420,8 +4428,16 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7168742387631074936, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7168742387631074936, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7168742387631074936, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3057860090803820251, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}

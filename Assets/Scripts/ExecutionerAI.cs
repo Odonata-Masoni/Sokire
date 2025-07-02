@@ -32,9 +32,6 @@ public class ExecutionerAI : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         damageable = GetComponent<Damageable>();
-
-        //if (attackHitbox != null)
-        //    attackHitbox.enabled = false;
     }
 
     void FixedUpdate()
@@ -136,14 +133,14 @@ public class ExecutionerAI : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (attackHitbox != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(attackHitbox.bounds.center, attackHitbox.bounds.size);
-        }
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    if (attackHitbox != null)
+    //    {
+    //        Gizmos.color = Color.red;
+    //        Gizmos.DrawWireCube(attackHitbox.bounds.center, attackHitbox.bounds.size);
+    //    }
+    //}
 
     public void SetCanMove(bool value)
     {
