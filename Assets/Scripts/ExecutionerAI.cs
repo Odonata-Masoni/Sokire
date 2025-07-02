@@ -43,11 +43,22 @@ public class ExecutionerAI : MonoBehaviour
             return;
         }
 
+        // 🔒 Nếu đang bị đánh thì đứng yên
+        if (damageable.LockVelocity)
+        {
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+            isMoving = false;
+            return;
+        }
+
+        // ⚔ Nếu đang không bị khóa (vẫn còn sống), xử lý tấn công
         if (PlayerInAttackZone && !isAttacking && Time.time - lastAttackTime >= attackCooldown)
         {
             StartAttack();
         }
-        else if (canMove && !isAttacking)
+
+        // ✅ Nếu không đang tấn công và có thể di chuyển
+        if (!isAttacking && canMove)
         {
             Move();
         }
@@ -59,6 +70,8 @@ public class ExecutionerAI : MonoBehaviour
 
         UpdateAnimator();
     }
+
+
 
     private void Move()
     {
@@ -99,8 +112,16 @@ public class ExecutionerAI : MonoBehaviour
     public void EndAttack()
     {
         isAttacking = false;
+
+        // Sau khi tấn công xong, nếu chưa chết, cho phép di chuyển
+        if (damageable != null && damageable.IsAlive)
+        {
+            SetCanMove(true);
+        }
+
         Debug.Log("⏹ Kết thúc đòn tấn công");
     }
+
 
     public void DealDamage()
     {

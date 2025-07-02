@@ -4295,6 +4295,10 @@ PrefabInstance:
       propertyPath: attackHitbox
       value: 
       objectReference: {fileID: 1410097531}
+    - target: {fileID: 73616831191295107, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+      propertyPath: attackCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1716972955698156066, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
       propertyPath: m_Size.x
       value: 1.1991155
@@ -4361,7 +4365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3178902472841473060, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
       propertyPath: maxHealth
-      value: 20.02
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3178902472841473060, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.size
@@ -4541,11 +4545,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3173924089199875450, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3173924089199875450, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: _maxHealth
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173924089199875450, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
+      propertyPath: currentHealth
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3459679351761363704, guid: 3a6f5166087786340809d16d1e69a4ca, type: 3}
       propertyPath: checkDistance

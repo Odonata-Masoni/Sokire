@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class Damageable : MonoBehaviour
 {
@@ -90,7 +91,7 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    protected virtual System.Collections.IEnumerator UnlockVelocityAfterDelay(float delay)
+    protected virtual IEnumerator UnlockVelocityAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
@@ -99,11 +100,20 @@ public class Damageable : MonoBehaviour
         LockVelocity = false;
         animator.SetBool(AnimationStrings.canMove, true);
 
+        // ✅ Cho cả ExecutionerAI gọi lại nếu có
+        if (TryGetComponent<ExecutionerAI>(out var ex))
+        {
+            ex.SetCanMove(true);
+        }
+
+        // ✅ Giữ lại cho WolfAI nếu cần
         if (TryGetComponent<WolfAI>(out var wolf))
         {
             wolf.OnAttackAnimationComplete();
         }
     }
+
+
 
     public float GetCurrentHealth() => currentHealth;
     public float GetMaxHealth() => maxHealth;
