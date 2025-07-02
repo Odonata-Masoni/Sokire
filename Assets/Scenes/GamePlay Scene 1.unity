@@ -4408,8 +4408,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5649376734544435834, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649376734544435834, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649376734544435834, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7168742387631074936, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3057860090803820251, guid: 9e552f9c52d0c7e48990c867ebd5b8e9, type: 3}
